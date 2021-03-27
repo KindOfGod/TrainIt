@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "roX2DOk0vuuQO6wynKUaptRoILQfbfhvUydy9xVionEDqD+o8U258ljVNTAd5z1Bci2OnRWOv9zjaxSgGso/UQ==",
+  "dgSpecHash": "1qKZCsqW/rqfvMchiWNHqNFilkltIBtp+6fIAhMaeWrPNUV+JOR8Gh9fukPSdUqMNIETdUR9PUYwst6mSbWx0w==",
   "success": true,
   "projectFilePath": "D:\\GitHub\\TrainIt\\TrainIt\\TrainIt.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "C:\\Users\\alexa\\.nuget\\packages\\materialdesigncolors\\2.0.0\\materialdesigncolors.2.0.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\materialdesignthemes\\4.0.0\\materialdesignthemes.4.0.0.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\materialdesignthemes.mahapps\\0.1.6\\materialdesignthemes.mahapps.0.1.6.nupkg.sha512",
-    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.19\\microsoft.xaml.behaviors.wpf.1.1.19.nupkg.sha512",
+    "C:\\Users\\alexa\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.31\\microsoft.xaml.behaviors.wpf.1.1.31.nupkg.sha512",
     "C:\\Users\\alexa\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
   ],
   "logs": []

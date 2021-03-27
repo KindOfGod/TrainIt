@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET5_0;NETCOREAPP
 D:\GitHub\TrainIt\TrainIt\App.xaml
-1-1711142684
+5604048915
 
-92010030376
-199-593702641
-View\MainWindow.xaml;
+17-1221509265
+1991104064038
+View\DashboardView.xaml;View\EditView.xaml;View\MainWindow.xaml;View\StatisticsView.xaml;View\TrainView.xaml;
 
-False
+True
 

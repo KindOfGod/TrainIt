@@ -1,13 +1,60 @@
-﻿<mah:MetroWindow x:Class="TrainIt.MainWindow"
+﻿<mah:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:TrainIt"
+        xmlns:materialDesignMahApps="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:v="clr-namespace:TrainIt.View"
+        xmlns:vm="clr-namespace:TrainIt.ViewModel"
+        x:Class="TrainIt.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="TrainIt" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
 
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <v:DashboardView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EditViewModel}">
+            <v:EditView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:TrainViewModel}">
+            <v:TrainView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:StatisticsViewModel}">
+            <v:StatisticsView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Fill="SteelBlue"  Grid.ColumnSpan="2"></Rectangle>
+
+        <mah:HamburgerMenuListBox Grid.Row="1" Background="SteelBlue" SelectedItem="{Binding SelectedItem}">
+            <ListBoxItem x:Name="DashboardItem" Margin="0,0,0,0">
+                <materialDesignMahApps:PackIcon Kind="MonitorDashboard" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+            </ListBoxItem>
+            <ListBoxItem x:Name="EditItem">
+                <materialDesignMahApps:PackIcon Kind="Pencil" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+            </ListBoxItem>
+            <ListBoxItem x:Name="TrainItem">
+                <materialDesignMahApps:PackIcon Kind="Dumbbell" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+            </ListBoxItem>
+            <ListBoxItem x:Name="StatisticsItem">
+                <materialDesignMahApps:PackIcon Kind="ChartLine" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+            </ListBoxItem>
+        </mah:HamburgerMenuListBox>
+
+        <ContentControl Content="{Binding SelectedView}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
     </Grid>
 </mah:MetroWindow>

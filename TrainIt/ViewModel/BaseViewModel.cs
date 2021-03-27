@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TrainIt.ViewModel
 {
-    class BaseViewModel
+    class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -19,6 +19,7 @@ namespace TrainIt.ViewModel
         {
             if (EqualityComparer<T>.Default.Equals(storage, value))
                 return false;
+
             storage = value;
             this.OnPropertyChange(propertyName);
             return true;
