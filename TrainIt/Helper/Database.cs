@@ -58,6 +58,7 @@ namespace TrainIt.Helper
                                   +"Edited TEXT NOT NULL, Created TEXT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
+
                 _myConnection.Close();
             }
         }
