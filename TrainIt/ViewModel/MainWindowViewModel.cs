@@ -5,6 +5,8 @@ using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ControlzEx.Standard;
+using MahApps.Metro.Controls.Dialogs;
 using TrainIt.Model;
 
 namespace TrainIt.ViewModel
@@ -18,15 +20,18 @@ namespace TrainIt.ViewModel
         private readonly TrainViewModel _trainViewModel;
         private readonly StatisticsViewModel _statisticsViewModel;
 
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private TrainItService _trainItService;
         private ListBoxItem _selectedItem;
         private BaseViewModel _selectedView;
         #endregion
 
         #region Constructors
-        public MainWindowViewModel(TrainItService trainItService)
+        public MainWindowViewModel(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
         {
             _trainItService = trainItService;
+            _dialogCoordinator = dialogCoordinator;
 
             _dashboardViewModel = new DashboardViewModel();
             _editViewModel = new EditViewModel();

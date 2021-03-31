@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 using TrainIt.Model;
 using TrainIt.ViewModel;
 
@@ -18,13 +19,13 @@ namespace TrainIt
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            TrainItService trainItService = new TrainItService(); ;
+            TrainItService trainItService = new TrainItService();
 
             try
             {
                 var mainView = new MainWindow();
                 mainView.Show();
-                mainView.DataContext = new MainWindowViewModel(trainItService);
+                mainView.DataContext = new MainWindowViewModel(trainItService, DialogCoordinator.Instance);
             }
             catch (Exception ex)
             {

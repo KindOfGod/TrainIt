@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace TrainIt.Model
 {
-    class TrainItService
+    public class TrainItService
     {
+        private DatabaseService _databaseService;
+
         #region Constructors
         public TrainItService()
         {
-                
+            _databaseService = new DatabaseService();
         }
         #endregion
     }
