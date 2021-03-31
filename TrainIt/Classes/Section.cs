@@ -5,28 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TrainIt.Classes
-{
-    class Section
+{ 
+    public class Section
     {
         #region Properties
 
         public int Id { get; set; }
         public int LanguageId { get; set; }
 
-        public float Grade { get; set; }
+        public double Grade { get; set; }
         
         public string Name { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
+        public string Created { get; set; }
+        public string Edited { get; set; }
+        public string LastLearned { get; set; }
 
         public List<Unit>Units { get; set; }
 
         #endregion
 
         #region Constructors
-        public Section(int id, int languageId, float grade, string name, DateTime created, DateTime edited, DateTime lastLearned)
+        public Section(int id, int languageId, double grade, string name, string created, string edited, string lastLearned)
         {
             Id = id;
             LanguageId = languageId;

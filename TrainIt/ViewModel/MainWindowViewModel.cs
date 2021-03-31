@@ -34,7 +34,7 @@ namespace TrainIt.ViewModel
             _dialogCoordinator = dialogCoordinator;
 
             _dashboardViewModel = new DashboardViewModel();
-            _editViewModel = new EditViewModel();
+            _editViewModel = new EditViewModel(trainItService, dialogCoordinator);
             _trainViewModel = new TrainViewModel();
             _statisticsViewModel = new StatisticsViewModel();
         }

@@ -1,5 +1,6 @@
 ﻿using System.Data.SQLite;
 using System.IO;
+using Accessibility;
 
 namespace TrainIt.Helper
 {
@@ -7,7 +8,7 @@ namespace TrainIt.Helper
     {
         #region Fields
 
-        private readonly SQLiteConnection _myConnection;
+        public SQLiteConnection _myConnection;
 
         #endregion
 
@@ -40,18 +41,39 @@ namespace TrainIt.Helper
             {
                 _myConnection.Open();
 
-                cmd.CommandText = @"CREATE TABLE languages(Id INTEGER PRIMARY KEY, Name TEXT, Grade REAL, FlagIconPATH TEXT, LastLearned TEXT, Edited TEXT, Created TEXT)";
+                cmd.CommandText = @"CREATE TABLE languages(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, Name TEXT NOT NULL, Grade REAL NOT NULL, "
+                                  + "FlagIconPath TEXT NOT NULL, LastLearned TEXT NOT NULL, Edited TEXT NOT NULL, Created TEXT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE sections(Id INTEGER PRIMARY KEY, Name TEXT, LanguageId INTEGER, Grade REAL, LastLearned TEXT, Edited TEXT, Created TEXT)";
+                cmd.CommandText = @"CREATE TABLE sections(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, Name TEXT NOT NULL, LanguageId INTEGER NOT NULL, " 
+                                  + "Grade REAL NOT NULL, LastLearned TEXT NOT NULL, Edited TEXT NOT NULL, Created TEXT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE units(Id INTEGER PRIMARY KEY, Name TEXT, SectionId INTEGER, Grade REAL, LastLearned TEXT, Edited TEXT, Created TEXT)";
+                cmd.CommandText = @"CREATE TABLE units(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, Name TEXT NOT NULL, SectionId INTEGER NOT NULL, " 
+                                  +"Grade REAL NOT NULL, LastLearned TEXT NOT NULL, Edited TEXT NOT NULL, Created TEXT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE words(Id INTEGER PRIMARY KEY, pLanguage TEXT, sLanguage TEXT, Comment TEXT, Synonym TEXT, UnitId INTEGER, Grade REAL, LastLearned TEXT, Edited TEXT, Created TEXT)";
+                cmd.CommandText = @"CREATE TABLE words(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, " 
+                                  +"Comment TEXT NOT NULL, Synonym TEXT NOT NULL, UnitId INTEGER NOT NULL, Grade REAL NOT NULL, LastLearned TEXT NOT NULL, " 
+                                  +"Edited TEXT NOT NULL, Created TEXT NOT NULL)";
                 cmd.ExecuteNonQuery();
 
+                _myConnection.Close();
+            }
+        }
+
+        public void OpenConnection()
+        {
+            if (_myConnection.State != System.Data.ConnectionState.Open)
+            {
+                _myConnection.Open();
+            }
+        }
+
+        public void CloseConnection()
+        {
+            if(_myConnection.State != System.Data.ConnectionState.Closed)
+            {
                 _myConnection.Close();
             }
         }

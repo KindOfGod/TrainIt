@@ -6,27 +6,28 @@ using System.Threading.Tasks;
 
 namespace TrainIt.Classes
 {
-    class Word
+    public class Word
     {
         #region Properties
 
         public int Id { get; set; }
-        public int Grade { get; set; }
         public int UnitId { get; set; }
+
+        public double Grade { get; set; }
 
         public string PrimaryLanguage { get; set; }
         public string SecondaryLanguage { get; set; }
         public string Comment { get; set; }
         public string Synonym { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
+        public string Created { get; set; }
+        public string Edited { get; set; }
+        public string LastLearned { get; set; }
         #endregion
 
         #region Constructors
 
-        public Word(int id, int grade, int unitId, string primaryLanguage, string secondaryLanguage, string comment, string synonym, DateTime created, DateTime edited, DateTime lastLearned)
+        public Word(int id, double grade, int unitId, string primaryLanguage, string secondaryLanguage, string comment, string synonym, string created, string edited, string lastLearned)
         {
             Id = id;
             Grade = grade;

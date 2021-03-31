@@ -19,13 +19,11 @@ namespace TrainIt
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            TrainItService trainItService = new TrainItService();
-
             try
             {
                 var mainView = new MainWindow();
                 mainView.Show();
-                mainView.DataContext = new MainWindowViewModel(trainItService, DialogCoordinator.Instance);
+                mainView.DataContext = new MainWindowViewModel(new TrainItService(), DialogCoordinator.Instance);
             }
             catch (Exception ex)
             {

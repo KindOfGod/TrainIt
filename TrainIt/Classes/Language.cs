@@ -7,26 +7,26 @@ using TrainIt.Classes;
 
 namespace TrainIt.Classes
 {
-    class Language
+    public class Language
     {
         #region Properties
 
         public int Id { get; set; }
-        public float Grade { get; set; }
+        public double Grade { get; set; }
 
         public string Name { get; set; }
         public string FlagIconPath { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
+        public string Created { get; set; }
+        public string Edited { get; set; }
+        public string LastLearned { get; set; }
 
         public List<Section> Sections { get; set; }
 
         #endregion
 
         #region Constructors
-        public Language(int id,  float grade, string name, string flagIconPath, DateTime created, DateTime edited, DateTime lastLearned)
+        public Language(int id, double grade, string name, string flagIconPath, string created, string edited, string lastLearned)
         {
             Id = id;
             Grade = grade;

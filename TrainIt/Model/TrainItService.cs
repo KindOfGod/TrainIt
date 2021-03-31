@@ -8,7 +8,7 @@ namespace TrainIt.Model
 {
     public class TrainItService
     {
-        private DatabaseService _databaseService;
+        public DatabaseService _databaseService;
 
         #region Constructors
         public TrainItService()

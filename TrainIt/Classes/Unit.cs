@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace TrainIt.Classes
 {
-    class Unit
+    public class Unit
     {
         #region Properties
         public int Id { get; set; }
         public int SectionId { get; set; }
 
-        public float Grade { get; set; }
+        public double Grade { get; set; }
 
         public string Name { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
+        public string Created { get; set; }
+        public string Edited { get; set; }
+        public string LastLearned { get; set; }
 
         public List<Word> Words { get; set; }
         #endregion
 
         #region Constructors
 
-        public Unit(int id, string name, float grade, int sectionId, DateTime created, DateTime edited, DateTime lastLearned)
+        public Unit(int id, string name, double grade, int sectionId, string created, string edited, string lastLearned)
         {
             Id = id;
             Name = name;
