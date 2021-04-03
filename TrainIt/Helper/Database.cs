@@ -13,17 +13,17 @@ namespace TrainIt.Helper
         #endregion
 
         #region Constructors
-
         public Database()
         {
             var ex = CheckForDatabase();
 
             _myConnection = new SQLiteConnection("Data Source=database.sqlite;Version=3;");
 
+            OpenConnection();
+
             if (!ex)
                 CreateDatabase();
         }
-
         #endregion
 
         private bool CheckForDatabase()
@@ -39,27 +39,22 @@ namespace TrainIt.Helper
         {
             using (var cmd = new SQLiteCommand(_myConnection))
             {
-                _myConnection.Open();
-
-                cmd.CommandText = @"CREATE TABLE languages(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, Name TEXT NOT NULL, Grade REAL NOT NULL, "
-                                  + "FlagIconPath TEXT NOT NULL, LastLearned TEXT NOT NULL, Edited TEXT NOT NULL, Created TEXT NOT NULL)";
+                cmd.CommandText = @"CREATE TABLE languages(Id GUID PRIMARY KEY, Name TEXT NOT NULL, Grade REAL NOT NULL, "
+                                  + "FlagIconPath TEXT NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE sections(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, Name TEXT NOT NULL, LanguageId INTEGER NOT NULL, " 
-                                  + "Grade REAL NOT NULL, LastLearned TEXT NOT NULL, Edited TEXT NOT NULL, Created TEXT NOT NULL)";
+                cmd.CommandText = @"CREATE TABLE sections(Id GUID PRIMARY KEY, Name TEXT NOT NULL, LanguageId GUID NOT NULL, "
+                                  + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE units(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, Name TEXT NOT NULL, SectionId INTEGER NOT NULL, " 
-                                  +"Grade REAL NOT NULL, LastLearned TEXT NOT NULL, Edited TEXT NOT NULL, Created TEXT NOT NULL)";
+                cmd.CommandText = @"CREATE TABLE units(Id GUID PRIMARY KEY, Name TEXT NOT NULL, SectionId GUID NOT NULL, "
+                                  + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE words(Id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, " 
-                                  +"Comment TEXT NOT NULL, Synonym TEXT NOT NULL, UnitId INTEGER NOT NULL, Grade REAL NOT NULL, LastLearned TEXT NOT NULL, " 
-                                  +"Edited TEXT NOT NULL, Created TEXT NOT NULL)";
+                cmd.CommandText = @"CREATE TABLE words(Id GUID PRIMARY KEY, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, "
+                                  + "Comment TEXT NOT NULL, Synonym TEXT NOT NULL, UnitId GUID NOT NULL, Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, "
+                                  + "Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
                 cmd.ExecuteNonQuery();
-
-
-                _myConnection.Close();
             }
         }
 

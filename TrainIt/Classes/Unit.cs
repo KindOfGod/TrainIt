@@ -9,23 +9,25 @@ namespace TrainIt.Classes
     public class Unit
     {
         #region Properties
-        public int Id { get; set; }
-        public int SectionId { get; set; }
+        public Guid Id { get; set; }
+        public Guid SectionId { get; set; }
 
         public double Grade { get; set; }
 
         public string Name { get; set; }
 
-        public string Created { get; set; }
-        public string Edited { get; set; }
-        public string LastLearned { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Edited { get; set; }
+        public DateTime LastLearned { get; set; }
 
         public List<Word> Words { get; set; }
+
+        public bool IsNew { get; set; }
         #endregion
 
         #region Constructors
 
-        public Unit(int id, string name, double grade, int sectionId, string created, string edited, string lastLearned)
+        public Unit(Guid id, string name, double grade, Guid sectionId, DateTime created, DateTime edited, DateTime lastLearned, bool isNew)
         {
             Id = id;
             Name = name;
@@ -35,6 +37,8 @@ namespace TrainIt.Classes
             Created = created;
             Edited = edited;
             LastLearned = lastLearned;
+
+            IsNew = isNew;
         }
 
         #endregion
