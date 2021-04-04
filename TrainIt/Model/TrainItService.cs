@@ -11,7 +11,7 @@ namespace TrainIt.Model
 {
     public class TrainItService
     {
-        public DatabaseService _databaseService;
+        private DatabaseService _databaseService;
 
         #region Constructors
         public TrainItService()
@@ -114,6 +114,54 @@ namespace TrainIt.Model
             try
             {
                 _databaseService.SetWord(word);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void DeleteLanguage(Language language)
+        {
+            try
+            {
+                _databaseService.DeleteLanguage(language);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void DeleteSection(Section section)
+        {
+            try
+            {
+                _databaseService.DeleteSection(section);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void DeleteUnit(Unit unit)
+        {
+            try
+            {
+                _databaseService.DeleteUnit(unit);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void DeleteWord(Word word)
+        {
+            try
+            {
+                _databaseService.DeleteWord(word);
             }
             catch (Exception e)
             {

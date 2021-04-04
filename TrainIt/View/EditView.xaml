@@ -4,8 +4,78 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:TrainIt.ViewModel"
+             xmlns:c="clr-namespace:TrainIt.Classes"
              xmlns:local="clr-namespace:TrainIt.View"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1280">
-    <Grid/>
+             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type=vm:EditViewModel, IsDesignTimeCreatable=True}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="OVERVIEW" FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="5"
+                  BorderThickness="2" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">
+
+            <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding LanguageList, IsAsync=True}"
+                      SelectedItemChanged="TreeView_OnSelectedItemChanged">
+
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Sections, IsAsync=True}" DataType="{x:Type c:Language}">
+
+                        <!--Language-->
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="D:\GitHub\TrainIt\TrainIt\Flags\DE@3x.png" Width="25" Height="25"/>
+                            <Label Margin="10,0,0,0" Content="{Binding Name}"/>
+                        </StackPanel>
+
+                        <HierarchicalDataTemplate.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Units, IsAsync=True}" DataType="{x:Type c:Section}">
+
+                                <!--Section-->
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="10,0,0,0" Content="{Binding Name}"/>
+                                </StackPanel>
+
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type c:Unit}">
+
+                                        <!--Unit-->
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Margin="10,0,0,0" Content="{Binding Name}"/>
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+
+                            </HierarchicalDataTemplate>
+                        </HierarchicalDataTemplate.ItemTemplate>
+
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+
+        </GroupBox>
+
+        <GroupBox Header="INFO" FontFamily="Consolas" FontWeight="Bold" Margin="5"
+                  BorderThickness="2" Grid.Row="1" Grid.Column="2">
+
+        </GroupBox>
+
+    </Grid>
 </UserControl>

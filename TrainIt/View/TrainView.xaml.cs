@@ -12,17 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls.Dialogs;
+using TrainIt.Model;
+using TrainIt.ViewModel;
 
 namespace TrainIt.View
 {
     /// <summary>
-    /// Interaction logic for TrainView.xaml
+    /// Interaction logic for TrainViewModel.xaml
     /// </summary>
     public partial class TrainView : UserControl
     {
-        public TrainView()
+        private readonly TrainViewModel _trainViewModel;
+
+        public TrainView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
         {
             InitializeComponent();
+
+            _trainViewModel = new TrainViewModel(trainItService, dialogCoordinator);
+            DataContext = _trainViewModel;
         }
     }
 }

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls.Dialogs;
+using TrainIt.Model;
+using TrainIt.ViewModel;
 
 namespace TrainIt.View
 {
@@ -20,9 +23,15 @@ namespace TrainIt.View
     /// </summary>
     public partial class StatisticsView : UserControl
     {
-        public StatisticsView()
+        private readonly StatisticsViewModel _statisticsViewModel;
+
+        public StatisticsView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
         {
             InitializeComponent();
+
+            _statisticsViewModel = new StatisticsViewModel(trainItService, dialogCoordinator);
+            DataContext = _statisticsViewModel;
+
         }
     }
 }

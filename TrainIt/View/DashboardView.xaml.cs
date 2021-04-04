@@ -12,17 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls.Dialogs;
+using TrainIt.Model;
+using TrainIt.ViewModel;
 
 namespace TrainIt.View
 {
     /// <summary>
-    /// Interaction logic for DashboardView.xaml
+    /// Interaction logic for DashboardViewModel.xaml
     /// </summary>
     public partial class DashboardView : UserControl
     {
-        public DashboardView()
+        private readonly DashboardViewModel _dashboardViewModel;
+
+        public DashboardView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
         {
             InitializeComponent();
+            _dashboardViewModel = new DashboardViewModel(trainItService, dialogCoordinator);
+            DataContext = _dashboardViewModel;
         }
     }
 }

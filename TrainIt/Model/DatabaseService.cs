@@ -237,5 +237,61 @@ namespace TrainIt.Model
             }
         }
         #endregion
+
+        #region Delete Methods
+
+        public void DeleteLanguage(Language language)
+        {
+            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            {
+                cmd.CommandText = @"DELETE FROM languages WHERE Id = @Id";
+                
+                cmd.Parameters.AddWithValue("@Id", language.Id);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteSection(Section section)
+        {
+            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            {
+                cmd.CommandText = @"DELETE FROM sections WHERE Id = @Id";
+
+                cmd.Parameters.AddWithValue("@Id", section.Id);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteUnit(Unit unit)
+        {
+            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            {
+                cmd.CommandText = @"DELETE FROM units WHERE Id = @Id";
+
+                cmd.Parameters.AddWithValue("@Id", unit.Id);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteWord(Word word)
+        {
+            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            {
+                cmd.CommandText = @"DELETE FROM words WHERE Id = @Id";
+
+                cmd.Parameters.AddWithValue("@Id", word.Id);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        #endregion
     }
 }

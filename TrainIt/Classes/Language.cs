@@ -24,6 +24,7 @@ namespace TrainIt.Classes
         public List<Section> Sections { get; set; }
 
         public bool IsNew { get; set; }
+        public bool IsExpanded { get; set; }
 
         #endregion
 
@@ -40,6 +41,7 @@ namespace TrainIt.Classes
             LastLearned = lastLearned;
 
             IsNew = isNew;
+            IsExpanded = true;
         }
         #endregion
     }

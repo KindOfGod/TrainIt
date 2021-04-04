@@ -8,23 +8,23 @@ using System.Windows.Controls;
 using ControlzEx.Standard;
 using MahApps.Metro.Controls.Dialogs;
 using TrainIt.Model;
+using TrainIt.View;
 
 namespace TrainIt.ViewModel
 {
     class MainWindowViewModel : BaseViewModel
     {
         #region Fields
-
-        private readonly DashboardViewModel _dashboardViewModel;
-        private readonly EditViewModel _editViewModel;
-        private readonly TrainViewModel _trainViewModel;
-        private readonly StatisticsViewModel _statisticsViewModel;
+        private readonly DashboardView _dashboardView;
+        private readonly EditView _editView;
+        private readonly TrainView _trainView;
+        private readonly StatisticsView _statisticsView;
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private TrainItService _trainItService;
+        private UserControl _selectedView;
         private ListBoxItem _selectedItem;
-        private BaseViewModel _selectedView;
         #endregion
 
         #region Constructors
@@ -33,16 +33,16 @@ namespace TrainIt.ViewModel
             _trainItService = trainItService;
             _dialogCoordinator = dialogCoordinator;
 
-            _dashboardViewModel = new DashboardViewModel();
-            _editViewModel = new EditViewModel(trainItService, dialogCoordinator);
-            _trainViewModel = new TrainViewModel();
-            _statisticsViewModel = new StatisticsViewModel();
+            _dashboardView = new DashboardView(trainItService, dialogCoordinator);
+            _editView = new EditView(trainItService, dialogCoordinator);
+            _trainView = new TrainView(trainItService, dialogCoordinator);
+            _statisticsView = new StatisticsView(trainItService, dialogCoordinator);
         }
         #endregion
 
         #region Properties
 
-        public BaseViewModel SelectedView
+        public UserControl SelectedView
         {
             get { return _selectedView; }
             set
@@ -78,16 +78,16 @@ namespace TrainIt.ViewModel
             switch (item.Name)
             {
                 case "DashboardItem":
-                    SelectedView = _dashboardViewModel;
+                    SelectedView = _dashboardView;
                     break;
                 case "EditItem":
-                    SelectedView = _editViewModel;
+                    SelectedView = _editView;
                     break;
                 case "TrainItem":
-                    SelectedView = _trainViewModel;
+                    SelectedView = _trainView;
                     break;
                 case "StatisticsItem":
-                    SelectedView = _statisticsViewModel;
+                    SelectedView = _statisticsView;
                     break;
             }
         }

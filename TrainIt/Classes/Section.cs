@@ -24,7 +24,7 @@ namespace TrainIt.Classes
         public List<Unit>Units { get; set; }
 
         public bool IsNew { get; set; }
-
+        public bool IsExpanded { get; set; }
         #endregion
 
         #region Constructors
@@ -40,6 +40,7 @@ namespace TrainIt.Classes
             LastLearned = lastLearned;
 
             IsNew = isNew;
+            IsExpanded = false;
         }
         #endregion
     }
