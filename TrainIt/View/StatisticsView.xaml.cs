@@ -23,15 +23,9 @@ namespace TrainIt.View
     /// </summary>
     public partial class StatisticsView : UserControl
     {
-        private readonly StatisticsViewModel _statisticsViewModel;
-
-        public StatisticsView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
+        public StatisticsView()
         {
             InitializeComponent();
-
-            _statisticsViewModel = new StatisticsViewModel(trainItService, dialogCoordinator);
-            DataContext = _statisticsViewModel;
-
         }
     }
 }

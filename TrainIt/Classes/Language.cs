@@ -7,24 +7,14 @@ using TrainIt.Classes;
 
 namespace TrainIt.Classes
 {
-    public class Language
+    public class Language : VocabularyBaseClass
     {
         #region Properties
-
-        public Guid Id { get; set; }
-        public double Grade { get; set; }
 
         public string Name { get; set; }
         public string FlagIconPath { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
-
         public List<Section> Sections { get; set; }
-
-        public bool IsNew { get; set; }
-        public bool IsExpanded { get; set; }
 
         #endregion
 

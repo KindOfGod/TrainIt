@@ -6,25 +6,13 @@ using System.Threading.Tasks;
 
 namespace TrainIt.Classes
 { 
-    public class Section
+    public class Section : VocabularyBaseClass
     {
         #region Properties
-
-        public Guid Id { get; set; }
         public Guid LanguageId { get; set; }
-
-        public double Grade { get; set; }
-        
         public string Name { get; set; }
 
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
-
         public List<Unit>Units { get; set; }
-
-        public bool IsNew { get; set; }
-        public bool IsExpanded { get; set; }
         #endregion
 
         #region Constructors

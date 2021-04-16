@@ -23,13 +23,9 @@ namespace TrainIt.View
     /// </summary>
     public partial class DashboardView : UserControl
     {
-        private readonly DashboardViewModel _dashboardViewModel;
-
-        public DashboardView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
+        public DashboardView()
         {
             InitializeComponent();
-            _dashboardViewModel = new DashboardViewModel(trainItService, dialogCoordinator);
-            DataContext = _dashboardViewModel;
         }
     }
 }

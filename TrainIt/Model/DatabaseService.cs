@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TrainIt.Classes;
 using TrainIt.Helper;
 
 namespace TrainIt.Model
 {
-    public class DatabaseService
+    public class DatabaseService : IDisposable
     {
         private readonly Database _myDatabase;
 
@@ -19,7 +20,7 @@ namespace TrainIt.Model
         #endregion
 
         #region Read Methods
-        public List<Language> GetLanguages()
+        public async Task<List<Language>> GetLanguages()
         {
             var languages = new List<Language>();
 
@@ -28,7 +29,7 @@ namespace TrainIt.Model
                 cmd.CommandText = @"SELECT Id, Grade, Name, FlagIconPath, Created, Edited, LastLearned FROM languages";
                 var r = cmd.ExecuteReader();
 
-                while (r.Read())
+                while (await r.ReadAsync())
                 {
                     var language = new Language(
                         (Guid)r["Id"],
@@ -48,7 +49,7 @@ namespace TrainIt.Model
             return languages;
         }
 
-        public List<Section> GetSections(Language language)
+        public async Task<List<Section>> GetSections(Language language)
         {
             var sections = new List<Section>();
 
@@ -58,7 +59,7 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@id", language.Id);
                 var r = cmd.ExecuteReader();
 
-                while (r.Read())
+                while (await r.ReadAsync())
                 {
                     var section = new Section(
                         (Guid)r["Id"],
@@ -78,7 +79,7 @@ namespace TrainIt.Model
             return sections;
         }
 
-        public List<Unit> GetUnits(Section section)
+        public async Task<List<Unit>> GetUnits(Section section)
         {
             var units = new List<Unit>();
 
@@ -88,13 +89,13 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@id", section.Id);
                 var r = cmd.ExecuteReader();
 
-                while (r.Read())
+                while (await r.ReadAsync())
                 {
                     var unit = new Unit(
                         (Guid)r["Id"],
-                        (string)r["Name"],
-                        (double)r["Grade"],
                         (Guid)r["SectionID"],
+                        (double)r["Grade"],
+                        (string)r["Name"],
                         (DateTime)r["Created"],
                         (DateTime)r["Edited"],
                         (DateTime)r["LastLearned"],
@@ -108,7 +109,7 @@ namespace TrainIt.Model
             return units;
         }
 
-        public List<Word> GetWords(Unit unit)
+        public async Task<List<Word>> GetWords(Unit unit)
         {
             var words = new List<Word>();
 
@@ -118,7 +119,7 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@id", unit.Id);
                 var r = cmd.ExecuteReader();
 
-                while (r.Read())
+                while (await r.ReadAsync())
                 {
                     var word = new Word(
                         (Guid)r["Id"],
@@ -144,7 +145,7 @@ namespace TrainIt.Model
 
         #region Write Methods
 
-        public void SetLanguage(Language language)
+        public async Task SetLanguage(Language language)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -162,11 +163,11 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@LastLearned", language.LastLearned);
                 cmd.Prepare();
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
-        public void SetSection(Section section)
+        public async Task SetSection(Section section)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -184,11 +185,11 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@LastLearned", section.LastLearned);
                 cmd.Prepare();
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
-        public void SetUnit(Unit unit)
+        public async Task SetUnit(Unit unit)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -206,11 +207,11 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@LastLearned", unit.LastLearned);
                 cmd.Prepare();
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
-        public void SetWord(Word word)
+        public async Task SetWord(Word word)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -233,14 +234,14 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@LastLearned", word.LastLearned);
                 cmd.Prepare();
 
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
         #endregion
 
         #region Delete Methods
 
-        public void DeleteLanguage(Language language)
+        public async Task DeleteLanguage(Language language)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -249,11 +250,11 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@Id", language.Id);
 
                 cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteSection(Section section)
+        public async Task DeleteSection(Section section)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -262,11 +263,11 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@Id", section.Id);
 
                 cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteUnit(Unit unit)
+        public async Task DeleteUnit(Unit unit)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -275,11 +276,11 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@Id", unit.Id);
 
                 cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteWord(Word word)
+        public async Task DeleteWord(Word word)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -288,10 +289,15 @@ namespace TrainIt.Model
                 cmd.Parameters.AddWithValue("@Id", word.Id);
 
                 cmd.Prepare();
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            _myDatabase.Dispose();
+        }
     }
 }

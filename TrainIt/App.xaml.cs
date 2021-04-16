@@ -17,18 +17,28 @@ namespace TrainIt
     /// </summary>
     public partial class App : Application
     {
+        private TrainItService _trainItService;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             try
             {
                 var mainView = new MainWindow();
                 mainView.Show();
-                mainView.DataContext = new MainWindowViewModel(new TrainItService(), DialogCoordinator.Instance);
+
+                _trainItService = new TrainItService();
+                mainView.DataContext = new MainWindowViewModel(_trainItService , DialogCoordinator.Instance);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
             }
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _trainItService.Dispose();
+            base.OnExit(e);
         }
     }
 }

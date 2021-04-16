@@ -6,25 +6,16 @@ using System.Threading.Tasks;
 
 namespace TrainIt.Classes
 {
-    public class Word
+    public class Word : VocabularyBaseClass
     {
         #region Properties
 
-        public Guid Id { get; set; }
         public Guid UnitId { get; set; }
-
-        public double Grade { get; set; }
 
         public string PrimaryLanguage { get; set; }
         public string SecondaryLanguage { get; set; }
         public string Comment { get; set; }
         public string Synonym { get; set; }
-
-        public DateTime Created { get; set; }
-        public DateTime Edited { get; set; }
-        public DateTime LastLearned { get; set; }
-
-        public bool IsNew { get; set; }
         #endregion
 
         #region Constructors

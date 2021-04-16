@@ -84,23 +84,23 @@ namespace TrainIt.ViewModel
             _sectionInfoView = new SectionInfoView(trainItService, dialogCoordinator);
             _unitInfoView = new UnitInfoView(trainItService, dialogCoordinator);
 
-            //TestObjects();
-            OnLoad();
+            //var tsk = TestObjects();
+            var task = OnLoad();
         }
         #endregion
 
         #region Methods
-        private void OnLoad()
+        private async Task OnLoad()
         {
-            LanguageList = _trainItService.GetLanguages();
+            LanguageList = await _trainItService.GetLanguages();
 
             foreach (var language in LanguageList)
             {
-                language.Sections = _trainItService.GetSections(language);
+                language.Sections = await _trainItService.GetSections(language);
 
                 foreach (var section in language.Sections)
                 {
-                    section.Units = _trainItService.GetUnits(section);
+                    section.Units = await _trainItService.GetUnits(section);
                 }
             }
         }
@@ -122,21 +122,21 @@ namespace TrainIt.ViewModel
             }
         }
 
-        private void TestObjects()
+        private async Task TestObjects()
         {
             double grade = 1;
 
             for (int i = 0; i < 5; i++)
             {
                 var language = new Language(Guid.NewGuid(), 1, "Language " + i, "path", DateTime.Now, DateTime.Now, DateTime.Now, true);
-                _trainItService.SetLanguage(language);
+                await _trainItService.SetLanguage(language);
 
                 var section = new Section(Guid.NewGuid(), language.Id, 1, "Section", DateTime.Now, DateTime.Now, DateTime.Now, true);
-                _trainItService.SetSection(section);
+                await _trainItService.SetSection(section);
 
                 for (int k = 0; k < 80; k++)
                 {
-                    _trainItService.SetUnit(new Unit(Guid.NewGuid(), "unit " + k, grade, section.Id, DateTime.Now, DateTime.Now,
+                    await _trainItService.SetUnit(new Unit(Guid.NewGuid(), section.Id, grade, "unit " + k, DateTime.Now, DateTime.Now,
                         DateTime.Now, true));
 
                     grade += 0.05;

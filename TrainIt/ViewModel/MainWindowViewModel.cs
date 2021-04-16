@@ -12,18 +12,18 @@ using TrainIt.View;
 
 namespace TrainIt.ViewModel
 {
-    class MainWindowViewModel : BaseViewModel
+    public class MainWindowViewModel : BaseViewModel
     {
         #region Fields
-        private readonly DashboardView _dashboardView;
-        private readonly EditView _editView;
-        private readonly TrainView _trainView;
-        private readonly StatisticsView _statisticsView;
+        private readonly DashboardViewModel _dashboardViewModel;
+        private readonly EditViewModel _editViewModel;
+        private readonly TrainViewModel _trainViewModel;
+        private readonly StatisticsViewModel _statisticsViewModel;
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private TrainItService _trainItService;
-        private UserControl _selectedView;
+        private BaseViewModel _selectedView;
         private ListBoxItem _selectedItem;
         #endregion
 
@@ -33,16 +33,16 @@ namespace TrainIt.ViewModel
             _trainItService = trainItService;
             _dialogCoordinator = dialogCoordinator;
 
-            _dashboardView = new DashboardView(trainItService, dialogCoordinator);
-            _editView = new EditView(trainItService, dialogCoordinator);
-            _trainView = new TrainView(trainItService, dialogCoordinator);
-            _statisticsView = new StatisticsView(trainItService, dialogCoordinator);
+            _dashboardViewModel = new DashboardViewModel(trainItService, dialogCoordinator);
+            _editViewModel = new EditViewModel(trainItService, dialogCoordinator);
+            _trainViewModel = new TrainViewModel(trainItService, dialogCoordinator);
+            _statisticsViewModel = new StatisticsViewModel(trainItService, dialogCoordinator);
         }
         #endregion
 
         #region Properties
 
-        public UserControl SelectedView
+        public BaseViewModel SelectedViewModel
         {
             get { return _selectedView; }
             set
@@ -78,16 +78,16 @@ namespace TrainIt.ViewModel
             switch (item.Name)
             {
                 case "DashboardItem":
-                    SelectedView = _dashboardView;
+                    SelectedViewModel = _dashboardViewModel;
                     break;
                 case "EditItem":
-                    SelectedView = _editView;
+                    SelectedViewModel = _editViewModel;
                     break;
                 case "TrainItem":
-                    SelectedView = _trainView;
+                    SelectedViewModel = _trainViewModel;
                     break;
                 case "StatisticsItem":
-                    SelectedView = _statisticsView;
+                    SelectedViewModel = _statisticsViewModel;
                     break;
             }
         }

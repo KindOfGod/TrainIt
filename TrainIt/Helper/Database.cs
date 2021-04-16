@@ -1,10 +1,11 @@
-﻿using System.Data.SQLite;
+﻿using System;
+using System.Data.SQLite;
 using System.IO;
 using Accessibility;
 
 namespace TrainIt.Helper
 {
-    internal class Database
+    internal class Database : IDisposable
     {
         #region Fields
 
@@ -72,6 +73,11 @@ namespace TrainIt.Helper
             {
                 _myConnection.Close();
             }
+        }
+
+        public void Dispose()
+        {
+            _myConnection.Dispose();
         }
     }
 }

@@ -23,14 +23,9 @@ namespace TrainIt.View
     /// </summary>
     public partial class TrainView : UserControl
     {
-        private readonly TrainViewModel _trainViewModel;
-
-        public TrainView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
+        public TrainView()
         {
             InitializeComponent();
-
-            _trainViewModel = new TrainViewModel(trainItService, dialogCoordinator);
-            DataContext = _trainViewModel;
         }
     }
 }

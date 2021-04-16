@@ -23,18 +23,17 @@ namespace TrainIt.View
     /// </summary>
     public partial class EditView : UserControl
     {
-        private readonly EditViewModel _editViewModel;
-
-        public EditView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
+        public EditView()
         {
             InitializeComponent();
-            _editViewModel = new EditViewModel(trainItService, dialogCoordinator);
-            DataContext = _editViewModel;
         }
 
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            _editViewModel.SelectedItem = e.NewValue;
+            if (DataContext is EditViewModel viewModel)
+            {
+                viewModel.SelectedItem = e.NewValue;
+            }
         }
     }
 }
