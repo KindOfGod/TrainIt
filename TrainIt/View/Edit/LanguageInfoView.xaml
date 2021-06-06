@@ -10,6 +10,29 @@
              d:DesignHeight="500" d:DesignWidth="500" d:DataContext="{d:DesignInstance Type={x:Type vm:LanguageInfoViewModel}, IsDesignTimeCreatable=True}">
 
     <Grid DataContext="{Binding SelectedLanguage}">
-        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="Black"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="372*"/>
+            <ColumnDefinition Width="83*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="12*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <Border CornerRadius="8" Grid.Column="1" Grid.Row="1">
+            <Border.Background>
+                <ImageBrush ImageSource="{Binding FlagIconPath}" Stretch="Fill"/>
+            </Border.Background>
+        </Border>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="30" Foreground="Black" Width="Auto" Height="60"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>

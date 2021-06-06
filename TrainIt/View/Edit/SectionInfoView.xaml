@@ -6,8 +6,10 @@
              xmlns:vm="clr-namespace:TrainIt.ViewModel.EditModels"
              xmlns:local="clr-namespace:TrainIt.View.Edit"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500">
-    <Grid>
-        <TextBlock Text="Section" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="Black"/>
+             d:DesignHeight="500" d:DesignWidth="500" d:DataContext="{d:DesignInstance Type={x:Type vm:SectionInfoViewModel}, IsDesignTimeCreatable=True}">
+
+    <Grid DataContext="{Binding SelectedSection}">
+        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="Black"/>
     </Grid>
+
 </UserControl>

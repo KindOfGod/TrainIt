@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -241,55 +242,79 @@ namespace TrainIt.Model
 
         #region Delete Methods
 
-        public async Task DeleteLanguage(Language language)
+        public async Task DeleteLanguage(IEnumerable<Language> languages)
         {
-            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
-            {
-                cmd.CommandText = @"DELETE FROM languages WHERE Id = @Id";
-                
-                cmd.Parameters.AddWithValue("@Id", language.Id);
+            if (languages == null) 
+                return;
 
-                cmd.Prepare();
-                await cmd.ExecuteNonQueryAsync();
+            foreach (var language in languages)
+            {
+                using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+                {
+                    cmd.CommandText = @"DELETE FROM languages WHERE Id = @Id";
+
+                    cmd.Parameters.AddWithValue("@Id", language.Id);
+
+                    cmd.Prepare();
+                    await cmd.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task DeleteSection(Section section)
+        public async Task DeleteSection(IEnumerable<Section> sections)
         {
-            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            if (sections == null)
+                return;
+
+            foreach (var section in sections)
             {
-                cmd.CommandText = @"DELETE FROM sections WHERE Id = @Id";
+                using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+                {
+                    cmd.CommandText = @"DELETE FROM sections WHERE Id = @Id";
 
-                cmd.Parameters.AddWithValue("@Id", section.Id);
+                    cmd.Parameters.AddWithValue("@Id", section.Id);
 
-                cmd.Prepare();
-                await cmd.ExecuteNonQueryAsync();
+                    cmd.Prepare();
+                    await cmd.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task DeleteUnit(Unit unit)
+        public async Task DeleteUnit(IEnumerable<Unit> units)
         {
-            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            if (units == null)
+                return;
+
+            foreach (var unit in units)
             {
-                cmd.CommandText = @"DELETE FROM units WHERE Id = @Id";
+                using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+                {
+                    cmd.CommandText = @"DELETE FROM units WHERE Id = @Id";
 
-                cmd.Parameters.AddWithValue("@Id", unit.Id);
+                    cmd.Parameters.AddWithValue("@Id", unit.Id);
 
-                cmd.Prepare();
-                await cmd.ExecuteNonQueryAsync();
+                    cmd.Prepare();
+                    await cmd.ExecuteNonQueryAsync();
+                }
             }
         }
 
-        public async Task DeleteWord(Word word)
+        public async Task DeleteWord(IEnumerable<Word> words)
         {
-            using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+            if (words == null)
+                return;
+
+            foreach (var word in words)
             {
-                cmd.CommandText = @"DELETE FROM words WHERE Id = @Id";
+                using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
+                {
+                    cmd.CommandText = @"DELETE FROM words WHERE Id = @Id";
 
-                cmd.Parameters.AddWithValue("@Id", word.Id);
+                    cmd.Parameters.AddWithValue("@Id", word.Id);
 
-                cmd.Prepare();
-                await cmd.ExecuteNonQueryAsync();
+                    cmd.Prepare();
+                    await cmd.ExecuteNonQueryAsync();
+                }
             }
         }
 

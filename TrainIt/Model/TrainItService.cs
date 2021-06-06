@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TrainIt.Classes;
 
@@ -121,11 +118,11 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteLanguage(Language language)
+        public async Task DeleteLanguages(IEnumerable<Language> languages)
         {
             try
             {
-                await _databaseService.DeleteLanguage(language);
+                await _databaseService.DeleteLanguage(languages);
             }
             catch (Exception e)
             {
@@ -133,11 +130,11 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteSection(Section section)
+        public async Task DeleteSections(IEnumerable<Section> sections)
         {
             try
             {
-                await _databaseService.DeleteSection(section);
+                await _databaseService.DeleteSection(sections);
             }
             catch (Exception e)
             {
@@ -145,11 +142,14 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteUnit(Unit unit)
+        public async Task DeleteUnits(IEnumerable<Unit> units)
         {
+            if (units == null) throw new ArgumentNullException(nameof(units));
+            if (units == null) throw new ArgumentNullException(nameof(units));
+            if (units == null) throw new ArgumentNullException(nameof(units));
             try
             {
-                await _databaseService.DeleteUnit(unit);
+                await _databaseService.DeleteUnit(units);
             }
             catch (Exception e)
             {
@@ -157,11 +157,11 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteWord(Word word)
+        public async Task DeleteWords(IEnumerable<Word> words)
         {
             try
             {
-                await _databaseService.DeleteWord(word);
+                await _databaseService.DeleteWord(words);
             }
             catch (Exception e)
             {

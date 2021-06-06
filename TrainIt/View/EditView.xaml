@@ -5,15 +5,27 @@
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:TrainIt.ViewModel"
+             xmlns:vme="clr-namespace:TrainIt.ViewModel.EditModels"
              xmlns:c="clr-namespace:TrainIt.Classes"
-             xmlns:local="clr-namespace:TrainIt.View"
+             xmlns:v="clr-namespace:TrainIt.View.Edit"
              xmlns:helper="clr-namespace:TrainIt.Helper"
+             xmlns:converter="clr-namespace:TrainIt.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type=vm:EditViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
-        <helper:DoubleToBrushConverter x:Key="DoubleToBrushConverter"/>
-        <helper:DateToBrushConverter x:Key="DateToBrushConverter"/>
+        <converter:DoubleToBrushConverter x:Key="DoubleToBrushConverter"/>
+        <converter:DateToBrushConverter x:Key="DateToBrushConverter"/>
+
+        <DataTemplate DataType="{x:Type vme:LanguageInfoViewModel}">
+            <v:LanguageInfoView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vme:SectionInfoViewModel}">
+            <v:SectionInfoView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vme:UnitInfoViewModel}">
+            <v:UnitInfoView/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
@@ -31,110 +43,122 @@
             <ColumnDefinition Width="3*" MinWidth="350"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Header="OVERVIEW" FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="5"
-                  BorderThickness="2" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1">
+        <TreeView x:Name="EditTreeView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      ItemsSource="{Binding LanguageList, IsAsync=True}"
+                      Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3" BorderBrush="#2196F3"
+                      SelectedItemChanged="TreeView_OnSelectedItemChanged" VirtualizingStackPanel.IsVirtualizing="True" 
+                      FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="0,0,5,0">
 
-            <TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding LanguageList, IsAsync=True}"
-                      SelectedItemChanged="TreeView_OnSelectedItemChanged" VirtualizingStackPanel.IsVirtualizing="True">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                    <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
 
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
-                    </Style>
-                </TreeView.ItemContainerStyle>
+            <TreeView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </TreeView.ItemsPanel>
 
-                <TreeView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </TreeView.ItemsPanel>
+            <TreeView.Resources>
+                <ContextMenu x:Key="LanguageContextMenu" StaysOpen="True" Style="{StaticResource MahApps.Styles.ContextMenu}">
+                    <MenuItem Header="Add Language"/>
+                    <MenuItem Header="Delete Language" Command="{Binding DeleteLanguageCommand}"/>
+                </ContextMenu>
+                <ContextMenu x:Key="SectionContextMenu" StaysOpen="True" Style="{StaticResource MahApps.Styles.ContextMenu}">
+                    <MenuItem Header="Add Section"/>
+                    <MenuItem Header="Delete Section" Command="{Binding DeleteSectionCommand}"/>
+                </ContextMenu>
+                <ContextMenu x:Key="UnitContextMenu" StaysOpen="True" Style="{StaticResource MahApps.Styles.ContextMenu}">
+                    <MenuItem Header="Add Unit"/>
+                    <MenuItem Header="Delete Unit" Command="{Binding DeleteUnitCommand}"/>
+                </ContextMenu>
+            </TreeView.Resources>
 
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Sections, IsAsync=True}" DataType="{x:Type c:Language}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Sections, IsAsync=True}" DataType="{x:Type c:Language}">
 
-                        <!--Language Design-->
-                        <StackPanel Orientation="Horizontal">
+                    <!--Language Design-->
+                    <StackPanel Orientation="Horizontal">
 
-                            <Border Width="40" Height="30" CornerRadius="8">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="../Ressources/Flags/FR@3x.png" Stretch="Fill"/>
-                                </Border.Background>
-                            </Border>
+                        <Border Width="40" Height="30" CornerRadius="8">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{Binding FlagIconPath}" Stretch="Fill"/>
+                            </Border.Background>
+                        </Border>
 
-                            <Border Width="50" Height="30" Margin="10,0,0,0" BorderThickness="0" CornerRadius="15"
+                        <Border Width="50" Height="30" Margin="10,0,0,0" BorderThickness="0" CornerRadius="15"
                                     Background="{Binding Grade, Converter={StaticResource DoubleToBrushConverter}}">
 
-                                <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                            <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                        Width="38" Height="30" FontWeight="ExtraBold"/>
-                            </Border>
+                        </Border>
 
-                            <Ellipse Width="25" Height="25" Margin="11,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
+                        <Ellipse Width="25" Height="25" Margin="11,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
                                      Fill="{Binding LastLearned, Converter={StaticResource DateToBrushConverter}}"/>
 
-                            <Label Margin="10,0,0,0" Content="{Binding Name}"/>
+                        <Label Margin="10,0,0,0" Content="{Binding Name}"/>
 
-                        </StackPanel>
+                    </StackPanel>
 
-                        <HierarchicalDataTemplate.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Units, IsAsync=True}" DataType="{x:Type c:Section}">
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Units, IsAsync=True}" DataType="{x:Type c:Section}">
 
-                                <!--Section Design-->
-                                <StackPanel Orientation="Horizontal">
+                            <!--Section Design-->
+                            <StackPanel Orientation="Horizontal">
 
-                                    <Border Width="50" Height="30" Margin="45,0,0,0" BorderThickness="0" CornerRadius="15" 
+                                <Border Width="50" Height="30" Margin="45,0,0,0" BorderThickness="0" CornerRadius="15" 
                                             Background="{Binding Grade, Converter={StaticResource DoubleToBrushConverter}}">
 
-                                        <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                    <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                                Width="38" Height="30" FontWeight="ExtraBold"/>
-                                    </Border>
+                                </Border>
 
-                                    <Ellipse Width="25" Height="25" Margin="10,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
+                                <Ellipse Width="25" Height="25" Margin="10,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
                                              Fill="{Binding LastLearned, Converter={StaticResource DateToBrushConverter}}"/>
 
-                                    <Label Margin="10,0,0,0" Content="{Binding Name}"/>
+                                <Label Margin="10,0,0,0" Content="{Binding Name}"/>
 
-                                </StackPanel>
+                            </StackPanel>
 
-                                <HierarchicalDataTemplate.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type c:Unit}">
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate DataType="{x:Type c:Unit}">
 
-                                        <!--Unit Design-->
-                                        <StackPanel Orientation="Horizontal">
+                                    <!--Unit Design-->
+                                    <StackPanel Orientation="Horizontal">
 
-                                            <Border Width="50" Height="30" Margin="35,0,0,0" BorderThickness="0" CornerRadius="15" 
+                                        <Border Width="50" Height="30" Margin="35,0,0,0" BorderThickness="0" CornerRadius="15" 
                                                     Background="{Binding Grade, Converter={StaticResource DoubleToBrushConverter}}">
 
-                                                <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                            <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                                        Width="38" Height="30" FontWeight="ExtraBold"/>
-                                            </Border>
+                                        </Border>
 
-                                            <Ellipse Width="25" Height="25" Margin="10,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
+                                        <Ellipse Width="25" Height="25" Margin="10,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
                                                      Fill="{Binding LastLearned, Converter={StaticResource DateToBrushConverter}}"/>
 
-                                            <Label Margin="10,0,0,0" Content="{Binding Name}"/>
+                                        <Label Margin="10,0,0,0" Content="{Binding Name}"/>
 
-                                        </StackPanel>
+                                    </StackPanel>
 
-                                    </DataTemplate>
-                                </HierarchicalDataTemplate.ItemTemplate>
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
 
-                            </HierarchicalDataTemplate>
-                        </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
 
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
-
-        </GroupBox>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
 
         <GridSplitter Width="5" Grid.Column="2" HorizontalAlignment="Stretch" Grid.RowSpan="2" Grid.Row="1"/>
 
-        <GroupBox Header="INFO" FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="5"
-                  BorderThickness="2" Grid.Row="1" Grid.Column="3">
-
-            <ContentControl Content="{Binding SelectedView}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-
-        </GroupBox>
+        <ContentControl Content="{Binding SelectedView}" 
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                        Grid.Row="1" Grid.Column="3" FontFamily="Consolas" FontSize="18" 
+                        FontWeight="Bold" Margin="5,0,0,0"/>
 
     </Grid>
 </UserControl>

@@ -7,44 +7,31 @@ using System.Windows.Input;
 
 namespace TrainIt.Helper
 {
-    class RelayCommand<T> : ICommand
+    internal class RelayCommand : ICommand
     {
-        #region Fields
-        readonly Action<T> _execute = null;
-        readonly Predicate<T> _canExecute = null;
-        #endregion
-
-        #region Constructors
-        public RelayCommand(Action<T> execute) : this(execute, null){}
-
-        public RelayCommand(Action<T> execute, Predicate<T> canExecute)
-        {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        #endregion
-
-        #region ICommand Members
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null || _canExecute((T)parameter);
-        }
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
 
         public event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
         }
 
-        public void Execute(object parameter)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
-            _execute((T)parameter);
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
         }
 
-        #endregion
+        public bool CanExecute(object parameters)
+        {
+            return _canExecute == null || _canExecute(parameters);
+        }
+
+        public void Execute(object parameters)
+        {
+            _execute(parameters);
+        }
     }
 }

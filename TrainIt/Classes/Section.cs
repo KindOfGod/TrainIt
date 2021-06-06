@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace TrainIt.Classes
         public Guid LanguageId { get; set; }
         public string Name { get; set; }
 
-        public List<Unit>Units { get; set; }
+        public ObservableCollection<Unit>Units { get; set; }
         #endregion
 
         #region Constructors

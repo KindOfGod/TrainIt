@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:TrainIt.ViewModel.EditModels"
              xmlns:local="clr-namespace:TrainIt.View.Edit"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500">
-    <Grid>
-        <TextBlock Text="Unit" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="Black"/>
+             d:DesignHeight="500" d:DesignWidth="500" d:DataContext="{d:DesignInstance Type={x:Type vm:UnitInfoViewModel}, IsDesignTimeCreatable=True}">
+    <Grid DataContext="{Binding SelectedUnit}">
+        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="Black"/>
     </Grid>
 </UserControl>

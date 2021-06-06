@@ -23,14 +23,9 @@ namespace TrainIt.View.Edit
     /// </summary>
     public partial class LanguageInfoView : UserControl
     {
-        public readonly LanguageInfoViewModel _languageInfoViewModel;
-
-        public LanguageInfoView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
+        public LanguageInfoView()
         {
             InitializeComponent();
-
-            _languageInfoViewModel = new LanguageInfoViewModel(trainItService, dialogCoordinator);
-            DataContext = _languageInfoViewModel;
         }
     }
 }

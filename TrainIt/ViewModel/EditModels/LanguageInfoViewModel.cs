@@ -21,7 +21,7 @@ namespace TrainIt.ViewModel.EditModels
 
         public Language SelectedLanguage
         {
-            get { return _selectedLanguage; }
+            get => _selectedLanguage;
             set
             {
                 if (_selectedLanguage != value)

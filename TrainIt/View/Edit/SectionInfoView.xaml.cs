@@ -23,14 +23,9 @@ namespace TrainIt.View.Edit
     /// </summary>
     public partial class SectionInfoView : UserControl
     {
-        private readonly SectionInfoViewModel _sectionInfoViewModel;
-
-        public SectionInfoView(TrainItService trainItService, IDialogCoordinator dialogCoordinator)
+        public SectionInfoView()
         {
             InitializeComponent();
-
-            _sectionInfoViewModel = new SectionInfoViewModel(trainItService, dialogCoordinator);
-            DataContext = _sectionInfoViewModel;
         }
     }
 }

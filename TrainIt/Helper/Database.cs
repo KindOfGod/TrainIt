@@ -9,7 +9,7 @@ namespace TrainIt.Helper
     {
         #region Fields
 
-        public SQLiteConnection _myConnection;
+        public readonly SQLiteConnection _myConnection;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace TrainIt.Helper
         }
         #endregion
 
-        private bool CheckForDatabase()
+        private static bool CheckForDatabase()
         {
             if (File.Exists("./database.sqlite"))
                 return true;

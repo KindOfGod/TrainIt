@@ -44,7 +44,7 @@ namespace TrainIt.ViewModel
 
         public BaseViewModel SelectedViewModel
         {
-            get { return _selectedView; }
+            get => _selectedView;
             set
             {
                 if (_selectedView != value)
@@ -57,7 +57,7 @@ namespace TrainIt.ViewModel
 
         public ListBoxItem SelectedItem
         {
-            get { return _selectedItem; }
+            get => _selectedItem;
             set
             {
                 if (_selectedItem != value)

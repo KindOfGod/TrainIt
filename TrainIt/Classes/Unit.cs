@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace TrainIt.Classes
 
         public string Name { get; set; }
 
-        public List<Word> Words { get; set; }
+        public ObservableCollection<Word> Words { get; set; }
         #endregion
 
         #region Constructors
