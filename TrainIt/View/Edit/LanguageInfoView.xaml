@@ -30,7 +30,7 @@
         </Border>
 
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Top"
+            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Top"
                        FontSize="30" Foreground="Black" Width="Auto" Height="60"/>
         </StackPanel>
 

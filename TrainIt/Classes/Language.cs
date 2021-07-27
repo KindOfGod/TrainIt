@@ -20,6 +20,20 @@ namespace TrainIt.Classes
         #endregion
 
         #region Constructors
+        public Language(Guid id, double grade, string name, string flagIconPath, DateTime created, DateTime edited, bool isNew)
+        {
+            Id = id;
+            Grade = grade;
+            Name = name;
+            FlagIconPath = flagIconPath;
+
+            Created = created;
+            Edited = edited;
+
+            IsNew = isNew;
+            IsExpanded = true;
+        }
+
         public Language(Guid id, double grade, string name, string flagIconPath, DateTime created, DateTime edited, DateTime lastLearned, bool isNew)
         {
             Id = id;

@@ -19,6 +19,20 @@ namespace TrainIt.Classes
 
         #region Constructors
 
+        public Unit(Guid id, Guid sectionId, double grade, string name, DateTime created, DateTime edited, bool isNew)
+        {
+            Id = id;
+            Name = name;
+            Grade = grade;
+            SectionId = sectionId;
+
+            Created = created;
+            Edited = edited;
+
+            IsNew = isNew;
+            IsExpanded = false;
+        }
+
         public Unit(Guid id, Guid sectionId, double grade, string name, DateTime created, DateTime edited, DateTime lastLearned, bool isNew)
         {
             Id = id;
@@ -33,7 +47,6 @@ namespace TrainIt.Classes
             IsNew = isNew;
             IsExpanded = false;
         }
-
         #endregion
     }
 }

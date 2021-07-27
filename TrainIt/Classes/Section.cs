@@ -17,6 +17,20 @@ namespace TrainIt.Classes
         #endregion
 
         #region Constructors
+        public Section(Guid id, Guid languageId, double grade, string name, DateTime created, DateTime edited, bool isNew)
+        {
+            Id = id;
+            LanguageId = languageId;
+            Grade = grade;
+            Name = name;
+
+            Created = created;
+            Edited = edited;
+
+            IsNew = isNew;
+            IsExpanded = false;
+        }
+
         public Section(Guid id, Guid languageId, double grade, string name, DateTime created, DateTime edited, DateTime lastLearned, bool isNew)
         {
             Id = id;

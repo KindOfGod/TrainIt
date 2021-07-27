@@ -18,6 +18,7 @@ namespace TrainIt.Model
         #endregion
 
         #region Database Methods
+
         public async Task<List<Language>> GetLanguages()
         {
             try
@@ -170,9 +171,14 @@ namespace TrainIt.Model
         }
         #endregion
 
+
+        #region Public Methods
+
         public void Dispose()
         {
             _databaseService.Dispose();
         }
+
+        #endregion
     }
 }

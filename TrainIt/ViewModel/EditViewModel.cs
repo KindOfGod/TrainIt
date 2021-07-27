@@ -1,23 +1,17 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Xml.Linq;
+using ControlzEx.Standard;
 using TrainIt.Classes;
+using TrainIt.Dialogs.Edit;
 using TrainIt.Helper;
 using TrainIt.Model;
-using TrainIt.View.Edit;
 using TrainIt.ViewModel.EditModels;
 
 namespace TrainIt.ViewModel
@@ -34,6 +28,7 @@ namespace TrainIt.ViewModel
 
         private BaseViewModel _selectedView;
         private ObservableCollection<Language> _languageList;
+        private Visibility _isAnythingSelected = Visibility.Collapsed;
         private object _selectedItem;
         #endregion
 
@@ -44,11 +39,11 @@ namespace TrainIt.ViewModel
             get => _languageList;
             private set
             {
-                if (_languageList != value)
-                {
-                    _languageList = value;
-                    OnPropertyChange();
-                }
+                if (_languageList == value) 
+                    return;
+
+                _languageList = value;
+                OnPropertyChange();
             }
         }
 
@@ -57,12 +52,25 @@ namespace TrainIt.ViewModel
             get => _selectedItem;
             set
             {
-                if (_selectedItem != value)
-                {
-                    _selectedItem = value;
-                    OnPropertyChange();
-                    OnSelectionChanged(_selectedItem);
-                }
+                if (_selectedItem == value) 
+                    return;
+
+                _selectedItem = value;
+                OnPropertyChange();
+                OnSelectionChanged(_selectedItem);
+            }
+        }
+
+        public Visibility IsAnythingSelected
+        {
+            get => _isAnythingSelected;
+            set
+            {
+                if (_isAnythingSelected == value) 
+                    return;
+
+                _isAnythingSelected = value;
+                OnPropertyChange();
             }
         }
 
@@ -71,11 +79,11 @@ namespace TrainIt.ViewModel
             get => _selectedView;
             private set
             {
-                if (_selectedView != value)
-                {
-                    _selectedView = value;
-                    OnPropertyChange();
-                }
+                if (_selectedView == value) 
+                    return;
+
+                _selectedView = value;
+                OnPropertyChange();
             }
         }
         #endregion
@@ -99,11 +107,9 @@ namespace TrainIt.ViewModel
 
         #region Commands
 
-        public ICommand DeleteLanguageCommand => new RelayCommand(p => OnDeleteLanguageCommand());
-
-        public ICommand DeleteSectionCommand => new RelayCommand(p => OnDeleteSectionCommand());
-
-        public ICommand DeleteUnitCommand => new RelayCommand(p => OnDeleteUnitCommand());
+        public ICommand DeleteButtonCommand => new RelayCommand(p => OnDelete());
+        public ICommand CreateButtonCommand => new RelayCommand(p => OnCreate());
+        public ICommand CreateLanguageCommand => new RelayCommand(p => OnCreateLanguage());
 
         #endregion
 
@@ -128,6 +134,8 @@ namespace TrainIt.ViewModel
             if (o == null)
                 return;
 
+            IsAnythingSelected = Visibility.Visible;
+
             if (o.GetType() == typeof(Language))
             {
                 SelectedView = _languageInfoViewModel;
@@ -145,7 +153,7 @@ namespace TrainIt.ViewModel
             }
         }
 
-        public T VisualUpwardSearch<T>(DependencyObject source) where T : DependencyObject
+        public static T VisualUpwardSearch<T>(DependencyObject source) where T : DependencyObject
         {
             var returnVal = source;
 
@@ -164,12 +172,96 @@ namespace TrainIt.ViewModel
         #endregion
 
         #region Creation Methods
+        private async void OnCreate()
+        {
+            if (SelectedItem.GetType() == typeof(Section))
+                await CreateUnit((Section)SelectedItem);
+            else
+                await CreateSection((Language)SelectedItem);
+        }
+
+        private async Task CreateUnit(Section section)
+        {
+            var dialog = new CreateLanguageDialog(_trainItService, _dialogCoordinator, 2);
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            var unit = new Unit(
+                Guid.NewGuid(),
+                section.Id,
+                3,
+                dialog._createLanguageDialogViewModel.Name,
+                DateTime.Now,
+                DateTime.Now,
+                true
+                );
+            await _trainItService.SetUnit(unit);
+        }
+
+        private async Task CreateSection(Language language)
+        {
+            var dialog = new CreateLanguageDialog(_trainItService, _dialogCoordinator, 1);
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            var sec = new Section(
+                Guid.NewGuid(),
+                language.Id,
+                3,
+                dialog._createLanguageDialogViewModel.Name,
+                DateTime.Now,
+                DateTime.Now,
+                true
+                );
+            await _trainItService.SetSection(sec);
+        }
+
+        private async void OnCreateLanguage()
+        {
+            var dialog = new CreateLanguageDialog(_trainItService, _dialogCoordinator, 0);
+
+            if (dialog.ShowDialog() != true) 
+                return;
+
+            var lan = new Language(
+                Guid.NewGuid(),
+                3,
+                dialog._createLanguageDialogViewModel.Name,
+                dialog._createLanguageDialogViewModel.SelectedIcon,
+                DateTime.Now, 
+                DateTime.Now,
+                true
+            );
+
+            await _trainItService.SetLanguage(lan);
+        }
 
         #endregion
 
         #region Delete Methods
 
-        private async void OnDeleteLanguageCommand()
+        private async void OnDelete()
+        {
+            if (SelectedItem == null) 
+                return;
+
+            if (SelectedItem.GetType() == typeof(Language))
+            {
+                await OnDeleteLanguageCommand();
+            }
+            else if (SelectedItem.GetType() == typeof(Section))
+            {
+                await OnDeleteSectionCommand();
+            }
+            else
+            {
+                await OnDeleteUnitCommand();
+            }
+        }
+
+        private async Task OnDeleteLanguageCommand()
         {
             var items = new ObservableCollection<Language>();
             var item = (Language) _selectedItem;
@@ -190,7 +282,7 @@ namespace TrainIt.ViewModel
             LanguageList.Remove(item);
         }
 
-        private async void OnDeleteSectionCommand()
+        private async Task OnDeleteSectionCommand()
         {
             var items = new ObservableCollection<Section>();
             var item = (Section)_selectedItem;
@@ -208,7 +300,7 @@ namespace TrainIt.ViewModel
             LanguageList.FirstOrDefault(x => x.Sections.Contains(item))?.Sections.Remove(item);
         }
 
-        private async void OnDeleteUnitCommand()
+        private async Task OnDeleteUnitCommand()
         {
             var items = new ObservableCollection<Unit>();
             var item = (Unit)_selectedItem;
@@ -234,21 +326,24 @@ namespace TrainIt.ViewModel
 
             for (var i = 0; i < 5; i++)
             {
-                var language = new Language(Guid.NewGuid(), 1, "Language " + i, @"..\Resources\Flags\DE@3x.png", DateTime.Now, DateTime.Now, DateTime.Now, true);
+                var language = new Language(Guid.NewGuid(), 1, "Language " + i, @"..\Resources\Flags\DE@3x.png", DateTime.Now, DateTime.Now, true);
                 await _trainItService.SetLanguage(language);
 
-                var section = new Section(Guid.NewGuid(), language.Id, 1, "Section", DateTime.Now, DateTime.Now, DateTime.Now, true);
-                await _trainItService.SetSection(section);
-
-                for (var k = 0; k < 80; k++)
+                for (var j = 0; j < 10; j++)
                 {
-                    await _trainItService.SetUnit(new Unit(Guid.NewGuid(), section.Id, grade, "unit " + k, DateTime.Now, DateTime.Now,
-                        DateTime.Now, true));
+                    var section = new Section(Guid.NewGuid(), language.Id, 1, "Section " + j, DateTime.Now, DateTime.Now, DateTime.Now, true);
+                    await _trainItService.SetSection(section);
 
-                    grade += 0.05;
+                    for (var k = 0; k < 80; k++)
+                    {
+                        await _trainItService.SetUnit(new Unit(Guid.NewGuid(), section.Id, grade, "unit " + k, DateTime.Now, DateTime.Now,
+                            DateTime.Now, true));
+
+                        grade += 0.05;
+                    }
+
+                    grade = 1;
                 }
-
-                grade = 1;
             }
         }
 
