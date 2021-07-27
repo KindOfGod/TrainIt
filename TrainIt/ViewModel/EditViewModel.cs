@@ -7,12 +7,12 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using ControlzEx.Standard;
 using TrainIt.Classes;
 using TrainIt.Dialogs.Edit;
 using TrainIt.Helper;
 using TrainIt.Model;
 using TrainIt.ViewModel.EditModels;
+using TrainIt.ViewModel.EditModels.UnitEditorModels;
 
 namespace TrainIt.ViewModel
 {
@@ -26,9 +26,11 @@ namespace TrainIt.ViewModel
         private readonly SectionInfoViewModel _sectionInfoViewModel;
         private readonly UnitInfoViewModel _unitInfoViewModel;
 
+        private BaseViewModel _selectedInfoView;
         private BaseViewModel _selectedView;
         private ObservableCollection<Language> _languageList;
         private Visibility _isAnythingSelected = Visibility.Collapsed;
+        private Visibility _isUnitSelected = Visibility.Collapsed;
         private object _selectedItem;
         #endregion
 
@@ -74,12 +76,38 @@ namespace TrainIt.ViewModel
             }
         }
 
+        public Visibility IsUnitSelected
+        {
+            get => _isUnitSelected;
+            set
+            {
+                if (_isUnitSelected == value)
+                    return;
+
+                _isUnitSelected = value;
+                OnPropertyChange();
+            }
+        }
+
+        public BaseViewModel SelectedInfoView
+        {
+            get => _selectedInfoView;
+            private set
+            {
+                if (_selectedInfoView == value) 
+                    return;
+
+                _selectedInfoView = value;
+                OnPropertyChange();
+            }
+        }
+
         public BaseViewModel SelectedView
         {
             get => _selectedView;
-            private set
+            set
             {
-                if (_selectedView == value) 
+                if (_selectedView == value)
                     return;
 
                 _selectedView = value;
@@ -101,7 +129,8 @@ namespace TrainIt.ViewModel
             _unitInfoViewModel = new UnitInfoViewModel(trainItService, dialogCoordinator);
 
             //var tsk = TestObjects();
-            var task = OnLoad();
+            OnLoad();
+            SelectedView = null;
         }
         #endregion
 
@@ -110,11 +139,12 @@ namespace TrainIt.ViewModel
         public ICommand DeleteButtonCommand => new RelayCommand(p => OnDelete());
         public ICommand CreateButtonCommand => new RelayCommand(p => OnCreate());
         public ICommand CreateLanguageCommand => new RelayCommand(p => OnCreateLanguage());
+        public ICommand EditUnitCommand => new RelayCommand(p => OnEditUnitCommand());
 
         #endregion
 
-        #region General Methods
-        private async Task OnLoad()
+        #region Private Methods
+        private async void OnLoad()
         {
             LanguageList = new ObservableCollection<Language>(await _trainItService.GetLanguages());
 
@@ -135,21 +165,23 @@ namespace TrainIt.ViewModel
                 return;
 
             IsAnythingSelected = Visibility.Visible;
+            IsUnitSelected = Visibility.Collapsed;
 
             if (o.GetType() == typeof(Language))
             {
-                SelectedView = _languageInfoViewModel;
+                SelectedInfoView = _languageInfoViewModel;
                 _languageInfoViewModel.SelectedLanguage = (Language)o;
             }
             else if (o.GetType() == typeof(Section))
             {
-                SelectedView = _sectionInfoViewModel;
+                SelectedInfoView = _sectionInfoViewModel;
                 _sectionInfoViewModel.SelectedSection = (Section)o;
             }
             else
             {
-                SelectedView = _unitInfoViewModel;
+                SelectedInfoView = _unitInfoViewModel;
                 _unitInfoViewModel.SelectedUnit = (Unit)o;
+                IsUnitSelected = Visibility.Visible;
             }
         }
 
@@ -168,6 +200,11 @@ namespace TrainIt.ViewModel
             }
 
             return returnVal as T;
+        }
+
+        private void OnEditUnitCommand()
+        {
+            SelectedView = new UnitEditorViewModel(_trainItService, _dialogCoordinator, (Unit)SelectedItem, this);
         }
         #endregion
 
@@ -329,15 +366,21 @@ namespace TrainIt.ViewModel
                 var language = new Language(Guid.NewGuid(), 1, "Language " + i, @"..\Resources\Flags\DE@3x.png", DateTime.Now, DateTime.Now, true);
                 await _trainItService.SetLanguage(language);
 
-                for (var j = 0; j < 10; j++)
+                for (var j = 0; j < 5; j++)
                 {
                     var section = new Section(Guid.NewGuid(), language.Id, 1, "Section " + j, DateTime.Now, DateTime.Now, DateTime.Now, true);
                     await _trainItService.SetSection(section);
 
-                    for (var k = 0; k < 80; k++)
+                    for (var k = 0; k < 10; k++)
                     {
-                        await _trainItService.SetUnit(new Unit(Guid.NewGuid(), section.Id, grade, "unit " + k, DateTime.Now, DateTime.Now,
-                            DateTime.Now, true));
+                        var unit = new Unit(Guid.NewGuid(), section.Id, grade, "unit " + k, DateTime.Now, DateTime.Now, DateTime.Now, true);
+                        await _trainItService.SetUnit(unit);
+
+                        for (var u = 0; u < 10; u++)
+                        {
+                            await _trainItService.SetWord(new Word(Guid.NewGuid(), grade, unit.Id,  "word" + u, "word" + u,
+                                "word" + u, "word" + u, DateTime.Now, DateTime.Now, DateTime.Now, true));
+                        }
 
                         grade += 0.05;
                     }

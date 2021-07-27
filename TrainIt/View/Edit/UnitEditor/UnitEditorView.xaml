@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="TrainIt.View.Edit.UnitEditor.UnitEditorView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TrainIt.View.Edit.UnitEditor"
+      xmlns:uem="clr-namespace:TrainIt.ViewModel.EditModels.UnitEditorModels"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type={x:Type uem:UnitEditorViewModel}, IsDesignTimeCreatable=True}"
+      Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Command="{Binding ReturnButtonCommand}" 
+                Grid.Row="2" Grid.Column="2" Width="60" Height="40" Background="MediumSeaGreen" BorderBrush="Transparent">
+            <materialDesign:PackIcon Kind="CheckAll" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Button>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBox FontSize="16"
+                Text="{Binding SelectedWord.PrimaryLanguage}"/>
+            <TextBox FontSize="16"
+                     Text="{Binding SelectedWord.SecondaryLanguage}"/>
+            <TextBox FontSize="16"
+                     Text="{Binding SelectedWord.Synonym}"/>
+            <TextBox FontSize="16"
+                     Text="{Binding SelectedWord.Comment}"/>
+        </StackPanel>
+
+        <ListBox Grid.Column="0" Grid.Row="1" Margin="10" BorderBrush="DodgerBlue" BorderThickness="3" 
+                 ItemsSource="{Binding Words, Mode=TwoWay}"
+                 SelectedItem="{Binding SelectedWord, Mode=TwoWay}" 
+                 VirtualizingStackPanel.IsVirtualizing="True">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock FontSize="16" FontWeight="UltraBold" Width="240" Text="{Binding PrimaryLanguage}"/>
+                        <TextBlock FontSize="14" Width="240" TextAlignment="Right" Text="{Binding SecondaryLanguage}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

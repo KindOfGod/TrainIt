@@ -171,7 +171,6 @@ namespace TrainIt.Model
         }
         #endregion
 
-
         #region Public Methods
 
         public void Dispose()

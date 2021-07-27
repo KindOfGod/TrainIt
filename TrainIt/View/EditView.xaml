@@ -11,6 +11,8 @@
              xmlns:v="clr-namespace:TrainIt.View.Edit"
              xmlns:helper="clr-namespace:TrainIt.Helper"
              xmlns:converter="clr-namespace:TrainIt.Converter"
+             xmlns:ue="clr-namespace:TrainIt.View.Edit.UnitEditor"
+             xmlns:uem="clr-namespace:TrainIt.ViewModel.EditModels.UnitEditorModels"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type=vm:EditViewModel, IsDesignTimeCreatable=True}">
 
@@ -27,6 +29,9 @@
         <DataTemplate DataType="{x:Type vme:UnitInfoViewModel}">
             <v:UnitInfoView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type uem:UnitEditorViewModel}">
+            <ue:UnitEditorView/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
@@ -42,7 +47,6 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="3*" MinWidth="350"/>
         </Grid.ColumnDefinitions>
- 
 
         <TreeView x:Name="EditTreeView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       ItemsSource="{Binding LanguageList, IsAsync=True}"
@@ -156,7 +160,7 @@
 
         <GridSplitter Width="5" Grid.Column="2" HorizontalAlignment="Stretch" Grid.RowSpan="2" Grid.Row="1"/>
 
-        <ContentControl Content="{Binding SelectedView}" 
+        <ContentControl Content="{Binding SelectedInfoView}" 
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                         Grid.Row="1" Grid.Column="3" FontFamily="Consolas" FontSize="18" 
                         FontWeight="Bold" Margin="5,0,0,10"/>
@@ -183,12 +187,24 @@
                 </Button>
 
                 <Button Margin="0,0,10,0" Width="60" Height="40" VerticalAlignment="Center"
+                        Background="DodgerBlue" BorderBrush="Transparent" ToolTip="Edit Unit" BorderThickness="0"
+                        Command="{Binding EditUnitCommand}"
+                        Visibility="{Binding IsUnitSelected}">
+                    <materialDesignMahApps:PackIcon Kind="Pen" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+
+                <Button Margin="0,0,10,0" Width="60" Height="40" VerticalAlignment="Center"
                         Background="Red" BorderBrush="Transparent" ToolTip="Deletes selected Item and it's children" BorderThickness="0"
-                        Command="{Binding DeleteButtonCommand}" Visibility="{Binding IsAnythingSelected}">
+                        Command="{Binding DeleteButtonCommand}" 
+                        Visibility="{Binding IsAnythingSelected}">
                     <materialDesignMahApps:PackIcon Kind="TrashCan" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
             </StackPanel>
 
         </Grid>
+
+        <ContentControl Content="{Binding SelectedView, Mode=TwoWay}"
+                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
+
     </Grid>
 </UserControl>

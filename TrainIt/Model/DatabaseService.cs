@@ -224,7 +224,7 @@ namespace TrainIt.Model
                                       "Comment = @Comment, Synonym = @Synonym, Created = @Created, Edited = @Edited, LastLearned = @LastLearned WHERE Id=@Id";
 
                 cmd.Parameters.AddWithValue("@Id", word.Id);
-                cmd.Parameters.AddWithValue("@SectionId", word.UnitId);
+                cmd.Parameters.AddWithValue("@UnitId", word.UnitId);
                 cmd.Parameters.AddWithValue("@Grade", word.Grade);
                 cmd.Parameters.AddWithValue("@pLanguage", word.PrimaryLanguage);
                 cmd.Parameters.AddWithValue("@sLanguage", word.SecondaryLanguage);

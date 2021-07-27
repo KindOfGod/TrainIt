@@ -1,11 +1,11 @@
-﻿<UserControl
+﻿<UserControl x:Class="TrainIt.View.Edit.LanguageInfoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:TrainIt.ViewModel.EditModels"
              xmlns:local="clr-namespace:TrainIt.View.Edit"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="TrainIt.View.Edit.LanguageInfoView"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500" d:DataContext="{d:DesignInstance Type={x:Type vm:LanguageInfoViewModel}, IsDesignTimeCreatable=True}">
 

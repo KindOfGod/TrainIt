@@ -22,6 +22,9 @@
     <Compile Update="View\Edit\SectionInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Edit\UnitEditor\UnitEditorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Edit\UnitInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -36,6 +39,9 @@
     <Page Update="Dialogs\Edit\CreationDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Resources\Styles\CustomScrollbarStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\DashboardView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -46,6 +52,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Edit\SectionInfoView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Edit\UnitEditor\UnitEditorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Edit\UnitInfoView.xaml">
