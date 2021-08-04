@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using GongSolutions.Wpf.DragDrop;
 using MahApps.Metro.Controls.Dialogs;
 using TrainIt.Classes;
 using TrainIt.Helper;
@@ -15,16 +18,14 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
     public class UnitEditorViewModel : BaseViewModel
     {
         #region Fields
-
         private readonly TrainItService _trainItService;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly Unit _selectedUnit;
         private readonly EditViewModel _parentModel;
         private Word _selectedWord;
         private ObservableCollection<Word> _words;
-
         #endregion
-        
+
         #region Properties
         public Word SelectedWord
         {
@@ -35,6 +36,8 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
                     return;
 
                 _selectedWord = value;
+                OnFocusedItemChanged();
+
                 OnPropertyChange();
             }
         }
@@ -63,7 +66,7 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
             _selectedUnit = selectedUnit;
             _parentModel = parentModel;
 
-            OnLoad();
+            OnLoad(); 
         }
         #endregion
 
@@ -73,8 +76,19 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
 
         #endregion
 
-        #region Privat Methods
+        #region Public Methods
 
+        public async void SaveChanges()
+        {
+            foreach (var word in Words)
+            {
+                await _trainItService.SetWord(word);
+            }
+        }
+
+        #endregion
+
+        #region Privat Methods
         private async void OnLoad()
         {
             Words = new ObservableCollection<Word>(await _trainItService.GetWords(_selectedUnit));
@@ -83,8 +97,22 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
                 SelectedWord = Words[0];
         }
 
+        private void OnFocusedItemChanged()
+        {
+            if (SelectedWord != null)
+            {
+                SelectedWord.PrimaryLanguage = SelectedWord.PrimaryLanguage.Trim();
+                SelectedWord.SecondaryLanguage = SelectedWord.SecondaryLanguage.Trim();
+                SelectedWord.Synonym = SelectedWord.Synonym.Trim();
+                SelectedWord.Comment = SelectedWord.Comment.Trim();
+
+                SaveChanges();
+            }
+        }
+
         private void OnReturnButtonCommand()
         {
+            OnFocusedItemChanged();
             _parentModel.SelectedView = null;
         }
         #endregion

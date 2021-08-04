@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:TrainIt.View.Edit.UnitEditor"
       xmlns:uem="clr-namespace:TrainIt.ViewModel.EditModels.UnitEditorModels"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:helper="clr-namespace:TrainIt.Helper"
+      xmlns:dd="urn:gong-wpf-dragdrop"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type={x:Type uem:UnitEditorViewModel}, IsDesignTimeCreatable=True}"
       Background="White">
@@ -17,9 +19,9 @@
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition/>
             <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
         <Button Command="{Binding ReturnButtonCommand}" 
@@ -27,21 +29,33 @@
             <materialDesign:PackIcon Kind="CheckAll" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBox FontSize="16"
-                Text="{Binding SelectedWord.PrimaryLanguage}"/>
-            <TextBox FontSize="16"
-                     Text="{Binding SelectedWord.SecondaryLanguage}"/>
-            <TextBox FontSize="16"
-                     Text="{Binding SelectedWord.Synonym}"/>
-            <TextBox FontSize="16"
-                     Text="{Binding SelectedWord.Comment}"/>
-        </StackPanel>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
 
-        <ListBox Grid.Column="0" Grid.Row="1" Margin="10" BorderBrush="DodgerBlue" BorderThickness="3" 
+            <StackPanel Grid.Row="1" DataContext="{Binding SelectedWord}">
+                <TextBox FontSize="16" materialDesign:HintAssist.Hint="Primary Language" TextAlignment="Center" Margin="10"
+                         Text="{Binding PrimaryLanguage}"/>
+
+                <TextBox FontSize="16" materialDesign:HintAssist.Hint="Secondary Language" TextAlignment="Center" Margin="10"
+                         Text="{Binding SecondaryLanguage}"/>
+
+                <TextBox FontSize="16" materialDesign:HintAssist.Hint="Synonym" TextAlignment="Center" Margin="10"
+                         Text="{Binding Synonym}"/>
+
+                <TextBox FontSize="16" materialDesign:HintAssist.Hint="Comment" TextAlignment="Center" Margin="10"
+                         TextWrapping="Wrap" AcceptsReturn="True"
+                         Text="{Binding Comment}"/>
+            </StackPanel>
+        </Grid>
+
+        <ListBox Grid.Column="2" Grid.Row="1" Margin="10" BorderBrush="DodgerBlue" BorderThickness="3" 
                  ItemsSource="{Binding Words, Mode=TwoWay}"
                  SelectedItem="{Binding SelectedWord, Mode=TwoWay}" 
-                 VirtualizingStackPanel.IsVirtualizing="True">
+                 VirtualizingStackPanel.IsVirtualizing="True" dd:DragDrop.SelectDroppedItems="True"
+                 dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.UseDefaultDragAdorner="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

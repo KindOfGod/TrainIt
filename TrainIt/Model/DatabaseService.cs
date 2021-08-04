@@ -220,7 +220,7 @@ namespace TrainIt.Model
                     cmd.CommandText = @"INSERT INTO words(Id, UnitId, Grade, pLanguage, sLanguage, Comment, Synonym, Created, Edited, LastLearned) " +
                                       "VALUES(@Id, @UnitId, @Grade, @pLanguage, @sLanguage, @Comment, @Synonym, @Created, @Edited, @LastLearned)";
                 else
-                    cmd.CommandText = @"UPDATE words SET UnitId = @UnitId, Grade = @Grade, pLanguage = @pLanguage, sLanguage = @sLanguage " +
+                    cmd.CommandText = @"UPDATE words SET UnitId = @UnitId, Grade = @Grade, pLanguage = @pLanguage, sLanguage = @sLanguage, " +
                                       "Comment = @Comment, Synonym = @Synonym, Created = @Created, Edited = @Edited, LastLearned = @LastLearned WHERE Id=@Id";
 
                 cmd.Parameters.AddWithValue("@Id", word.Id);

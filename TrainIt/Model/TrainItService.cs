@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using TrainIt.Classes;
 
 namespace TrainIt.Model
@@ -17,6 +20,17 @@ namespace TrainIt.Model
         }
         #endregion
 
+        #region Help Methods
+
+        public async void ShowErrorMessage(string errorName, string message)
+        {
+            var metroWindow = Application.Current.MainWindow as MetroWindow;
+
+            await metroWindow.ShowMessageAsync("Title", "message");
+        }
+
+        #endregion
+
         #region Database Methods
 
         public async Task<List<Language>> GetLanguages()
@@ -28,6 +42,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
                 return null;
             }
         }
@@ -41,6 +56,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
                 return null;
             }
         }
@@ -54,6 +70,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
                 return null;
             }
         }
@@ -67,6 +84,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
                 return null;
             }
         }
@@ -80,6 +98,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -92,6 +111,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -104,6 +124,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -116,6 +137,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -128,6 +150,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -140,6 +163,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -155,6 +179,7 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
 
@@ -167,17 +192,21 @@ namespace TrainIt.Model
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                ShowErrorMessage("Database Error", e.Message);
             }
         }
         #endregion
 
         #region Public Methods
-
         public void Dispose()
         {
             _databaseService.Dispose();
         }
 
+        #endregion
+
+        #region Private Methods
+        
         #endregion
     }
 }
