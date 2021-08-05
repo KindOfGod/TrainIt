@@ -11,24 +11,20 @@ namespace TrainIt.Model
 {
     public class TrainItService : IDisposable
     {
+
+        #region Fields
+
+        private readonly IDialogCoordinator _dialogCoordinator;
         private readonly DatabaseService _databaseService;
 
-        #region Constructors
-        public TrainItService()
-        {
-            _databaseService = new DatabaseService();
-        }
         #endregion
 
-        #region Help Methods
-
-        public async void ShowErrorMessage(string errorName, string message)
+        #region Constructors
+        public TrainItService(IDialogCoordinator dialogCoordinator)
         {
-            var metroWindow = Application.Current.MainWindow as MetroWindow;
-
-            await metroWindow.ShowMessageAsync("Title", "message");
+            _dialogCoordinator = dialogCoordinator;
+            _databaseService = new DatabaseService();
         }
-
         #endregion
 
         #region Database Methods
@@ -198,6 +194,12 @@ namespace TrainIt.Model
         #endregion
 
         #region Public Methods
+
+        public static async void ShowErrorMessage(string title, string message)
+        {
+            await (Application.Current.MainWindow as MetroWindow).ShowMessageAsync(title, message);
+        }
+
         public void Dispose()
         {
             _databaseService.Dispose();

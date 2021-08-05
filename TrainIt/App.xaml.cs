@@ -26,8 +26,10 @@ namespace TrainIt
                 var mainView = new MainWindow();
                 mainView.Show();
 
-                _trainItService = new TrainItService();
-                mainView.DataContext = new MainWindowViewModel(_trainItService , DialogCoordinator.Instance);
+                var _dialogCoordinator = DialogCoordinator.Instance;
+
+                _trainItService = new TrainItService(_dialogCoordinator);
+                mainView.DataContext = new MainWindowViewModel(_trainItService , _dialogCoordinator);
             }
             catch (Exception ex)
             {

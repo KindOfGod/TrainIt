@@ -99,15 +99,15 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
 
         private void OnFocusedItemChanged()
         {
-            if (SelectedWord != null)
-            {
-                SelectedWord.PrimaryLanguage = SelectedWord.PrimaryLanguage.Trim();
-                SelectedWord.SecondaryLanguage = SelectedWord.SecondaryLanguage.Trim();
-                SelectedWord.Synonym = SelectedWord.Synonym.Trim();
-                SelectedWord.Comment = SelectedWord.Comment.Trim();
+            if (SelectedWord == null)
+                return;
 
-                SaveChanges();
-            }
+            SelectedWord.PrimaryLanguage = SelectedWord.PrimaryLanguage.Trim();
+            SelectedWord.SecondaryLanguage = SelectedWord.SecondaryLanguage.Trim();
+            SelectedWord.Synonym = SelectedWord.Synonym.Trim();
+            SelectedWord.Comment = SelectedWord.Comment.Trim();
+
+            SaveChanges();
         }
 
         private void OnReturnButtonCommand()

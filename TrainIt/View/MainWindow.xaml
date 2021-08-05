@@ -10,8 +10,7 @@
         xmlns:v="clr-namespace:TrainIt.View"
         xmlns:vm="clr-namespace:TrainIt.ViewModel"
         x:Class="TrainIt.MainWindow"
-        mc:Ignorable="d"
-        Title="TrainIt" Height="720" Width="1280" MinWidth="900" MinHeight="450"
+        mc:Ignorable="d" Title="TrainIt" Height="720" Width="1280" MinWidth="900" MinHeight="450"
         WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     <mah:MetroWindow.Resources>
