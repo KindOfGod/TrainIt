@@ -80,18 +80,26 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
 
         public async void SaveChanges()
         {
+            UpdateOrder();
+
             foreach (var word in Words)
             {
-                await _trainItService.SetWord(word);
+                if (word.IsEdited)
+                {
+                    await _trainItService.SetWord(word);
+                    word.IsEdited = false;
+                }
             }
         }
-
         #endregion
 
         #region Privat Methods
         private async void OnLoad()
         {
-            Words = new ObservableCollection<Word>(await _trainItService.GetWords(_selectedUnit));
+            var words = new ObservableCollection<Word>(await _trainItService.GetWords(_selectedUnit));
+            UnitHelper.SortUnit(ref words);
+
+            Words = words;
 
             if (Words.Count > 0)
                 SelectedWord = Words[0];
@@ -101,6 +109,8 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
         {
             if (SelectedWord == null)
                 return;
+
+            SelectedWord.IsEdited = true;
 
             SelectedWord.PrimaryLanguage = SelectedWord.PrimaryLanguage.Trim();
             SelectedWord.SecondaryLanguage = SelectedWord.SecondaryLanguage.Trim();
@@ -114,6 +124,22 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
         {
             OnFocusedItemChanged();
             _parentModel.SelectedView = null;
+        }
+
+        private void UpdateOrder()
+        {
+            var currentId = Guid.Empty;
+
+            foreach (var word in Words)
+            {
+                if (word.PreviousWordId != currentId)
+                {
+                    word.PreviousWordId = currentId;
+                    word.IsEdited = true;
+                }
+
+                currentId = word.Id;
+            }
         }
         #endregion
     }

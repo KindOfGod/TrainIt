@@ -116,7 +116,7 @@ namespace TrainIt.Model
 
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
-                cmd.CommandText = @"SELECT Id, Grade, UnitId, pLanguage, sLanguage, Comment, Synonym, Created, Edited, LastLearned FROM words WHERE UnitId like @id";
+                cmd.CommandText = @"SELECT Id, PreviousWordId, Grade, UnitId, pLanguage, sLanguage, Comment, Synonym, Created, Edited, LastLearned FROM words WHERE UnitId like @id";
                 cmd.Parameters.AddWithValue("@id", unit.Id);
                 var r = cmd.ExecuteReader();
 
@@ -136,6 +136,7 @@ namespace TrainIt.Model
                         false
                         );
 
+                    word.PreviousWordId = (Guid)r["PreviousWordId"];
                     words.Add(word);
                 }
             }
@@ -217,13 +218,14 @@ namespace TrainIt.Model
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
                 if (word.IsNew)
-                    cmd.CommandText = @"INSERT INTO words(Id, UnitId, Grade, pLanguage, sLanguage, Comment, Synonym, Created, Edited, LastLearned) " +
-                                      "VALUES(@Id, @UnitId, @Grade, @pLanguage, @sLanguage, @Comment, @Synonym, @Created, @Edited, @LastLearned)";
+                    cmd.CommandText = @"INSERT INTO words(Id, PreviousWordId, UnitId, Grade, pLanguage, sLanguage, Comment, Synonym, Created, Edited, LastLearned) " +
+                                      "VALUES(@Id, @PreviousWordId, @UnitId, @Grade, @pLanguage, @sLanguage, @Comment, @Synonym, @Created, @Edited, @LastLearned)";
                 else
-                    cmd.CommandText = @"UPDATE words SET UnitId = @UnitId, Grade = @Grade, pLanguage = @pLanguage, sLanguage = @sLanguage, " +
+                    cmd.CommandText = @"UPDATE words SET UnitId = @UnitId, PreviousWordId = @PreviousWordId, Grade = @Grade, pLanguage = @pLanguage, sLanguage = @sLanguage, " +
                                       "Comment = @Comment, Synonym = @Synonym, Created = @Created, Edited = @Edited, LastLearned = @LastLearned WHERE Id=@Id";
 
                 cmd.Parameters.AddWithValue("@Id", word.Id);
+                cmd.Parameters.AddWithValue("@PreviousWordId", word.PreviousWordId);
                 cmd.Parameters.AddWithValue("@UnitId", word.UnitId);
                 cmd.Parameters.AddWithValue("@Grade", word.Grade);
                 cmd.Parameters.AddWithValue("@pLanguage", word.PrimaryLanguage);

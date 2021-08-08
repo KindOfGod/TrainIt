@@ -52,7 +52,7 @@ namespace TrainIt.Helper
                                   + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
                 cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE words(Id GUID PRIMARY KEY, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, "
+                cmd.CommandText = @"CREATE TABLE words(Id GUID PRIMARY KEY, PreviousWordId GUID, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, "
                                   + "Comment TEXT, Synonym TEXT, UnitId GUID NOT NULL, Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, "
                                   + "Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
                 cmd.ExecuteNonQuery();

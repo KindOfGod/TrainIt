@@ -127,8 +127,7 @@ namespace TrainIt.ViewModel
             _languageInfoViewModel = new LanguageInfoViewModel(trainItService, dialogCoordinator);
             _sectionInfoViewModel = new SectionInfoViewModel(trainItService, dialogCoordinator);
             _unitInfoViewModel = new UnitInfoViewModel(trainItService, dialogCoordinator);
-
-            //var tsk = TestObjects();
+            
             OnLoad();
             SelectedView = null;
         }
@@ -350,44 +349,6 @@ namespace TrainIt.ViewModel
             LanguageList.FirstOrDefault(x => x.Sections.ToList().Exists(y => y.Units.Contains(item)))
                 ?.Sections.FirstOrDefault(x => x.Units.Contains(item))
                 ?.Units.Remove(item);
-        }
-
-        #endregion
-
-        // Todo: Delete Temporary Test
-        #region Test Methods
-
-        private async Task TestObjects()
-        {
-            double grade = 1;
-
-            for (var i = 0; i < 5; i++)
-            {
-                var language = new Language(Guid.NewGuid(), 1, "Language " + i, @"..\Resources\Flags\DE@3x.png", DateTime.Now, DateTime.Now, true);
-                await _trainItService.SetLanguage(language);
-
-                for (var j = 0; j < 5; j++)
-                {
-                    var section = new Section(Guid.NewGuid(), language.Id, 1, "Section " + j, DateTime.Now, DateTime.Now, DateTime.Now, true);
-                    await _trainItService.SetSection(section);
-
-                    for (var k = 0; k < 10; k++)
-                    {
-                        var unit = new Unit(Guid.NewGuid(), section.Id, grade, "unit " + k, DateTime.Now, DateTime.Now, DateTime.Now, true);
-                        await _trainItService.SetUnit(unit);
-
-                        for (var u = 0; u < 10; u++)
-                        {
-                            await _trainItService.SetWord(new Word(Guid.NewGuid(), grade, unit.Id,  "word" + u, "word" + u,
-                                "word" + u, "word" + u, DateTime.Now, DateTime.Now, DateTime.Now, true));
-                        }
-
-                        grade += 0.05;
-                    }
-
-                    grade = 1;
-                }
-            }
         }
 
         #endregion

@@ -9,9 +9,17 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:v="clr-namespace:TrainIt.View"
         xmlns:vm="clr-namespace:TrainIt.ViewModel"
-        x:Class="TrainIt.MainWindow"
+        x:Class="TrainIt.MainWindow" WindowTitleBrush="#2196F3" NonActiveWindowTitleBrush="#2196F3"
         mc:Ignorable="d" Title="TrainIt" Height="720" Width="1280" MinWidth="900" MinHeight="450"
         WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Command="{Binding }" ToolTip="Settings">
+                <materialDesignMahApps:PackIcon Kind="Settings" Width="30" Height="30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
 
     <mah:MetroWindow.Resources>
         <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
@@ -30,7 +38,6 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -39,10 +46,8 @@
             <ColumnDefinition Width="173*"/>
         </Grid.ColumnDefinitions>
 
-        <Rectangle Fill="#2196F3"  Grid.ColumnSpan="3"></Rectangle>
-
         <mah:HamburgerMenuListBox Grid.Row="1" Grid.Column="0" Background="#2196F3" SelectedItem="{Binding SelectedItem}">
-            <ListBoxItem x:Name="DashboardItem">
+            <ListBoxItem x:Name="DashboardItem" Margin="0,30,0,0">
                 <materialDesignMahApps:PackIcon Kind="ViewDashboard" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                                 Width="40" Height="40"/>
             </ListBoxItem>
