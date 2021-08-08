@@ -9,7 +9,8 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:v="clr-namespace:TrainIt.View"
         xmlns:vm="clr-namespace:TrainIt.ViewModel"
-        x:Class="TrainIt.MainWindow" WindowTitleBrush="#2196F3" NonActiveWindowTitleBrush="#2196F3"
+        x:Class="TrainIt.MainWindow" WindowTitleBrush="#202021" NonActiveWindowTitleBrush="#202021" FlyoutOverlayBrush="#202021" GlowBrush="#202021"
+        OverlayBrush="#202021" Background="#414047"
         mc:Ignorable="d" Title="TrainIt" Height="720" Width="1280" MinWidth="900" MinHeight="450"
         WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
@@ -34,37 +35,61 @@
         <DataTemplate DataType="{x:Type vm:StatisticsViewModel}">
             <v:StatisticsView/>
         </DataTemplate>
+
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.125" Value="250"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.125" Value="50"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </mah:MetroWindow.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="237*"/>
-            <ColumnDefinition Width="173*"/>
-        </Grid.ColumnDefinitions>
+    <DockPanel Dock="Left">
 
-        <mah:HamburgerMenuListBox Grid.Row="1" Grid.Column="0" Background="#2196F3" SelectedItem="{Binding SelectedItem}">
-            <ListBoxItem x:Name="DashboardItem" Margin="0,30,0,0">
-                <materialDesignMahApps:PackIcon Kind="ViewDashboard" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                Width="40" Height="40"/>
-            </ListBoxItem>
-            <ListBoxItem x:Name="EditItem">
-                <materialDesignMahApps:PackIcon Kind="Pencil" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                Width="40" Height="40"/>
-            </ListBoxItem>
-            <ListBoxItem x:Name="TrainItem">
-                <materialDesignMahApps:PackIcon Kind="Dumbbell" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                Width="40" Height="40"/>
-            </ListBoxItem>
-            <ListBoxItem x:Name="StatisticsItem">
-                <materialDesignMahApps:PackIcon Kind="ChartLine" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                                Width="40" Height="40"/>
-            </ListBoxItem>
-        </mah:HamburgerMenuListBox>
+        <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="#2E2E30">
+            <StackPanel>
+                <Grid Height="150" Background="#202021"/>
 
-        <ContentControl Content="{Binding SelectedViewModel, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
-    </Grid>
+                <ListView Foreground="White" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListViewItem x:Name="DashboardItem" Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="5, 0">
+                            <materialDesignMahApps:PackIcon Kind="ViewDashboard" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                            <TextBlock Text="Dashboard" Margin="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="EditItem" Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal"  Margin="5, 0">
+                            <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                            <TextBlock Text="Edit" Margin="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="TrainItem" Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal"  Margin="5, 0">
+                            <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                            <TextBlock Text="Train" Margin="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="StatisticsItem" Height="45" Padding="0">
+                        <StackPanel Orientation="Horizontal" Margin="5, 0">
+                            <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                            <TextBlock Text="Statistics" Margin="10" FontWeight="Bold"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+
+            <Button x:Name="ButtonMenu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Click="ButtonMenu_OnClick">
+                <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="White" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
+            </Button>
+        </Grid>
+
+        <ContentControl Content="{Binding SelectedViewModel, Mode=TwoWay}"/>
+
+    </DockPanel>
 </mah:MetroWindow>

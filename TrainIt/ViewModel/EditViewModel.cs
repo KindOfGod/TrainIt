@@ -142,6 +142,15 @@ namespace TrainIt.ViewModel
 
         #endregion
 
+        #region Public Methods
+
+        public void OnEditUnitCommand()
+        {
+            SelectedView = new UnitEditorViewModel(_trainItService, _dialogCoordinator, (Unit)SelectedItem, this);
+        }
+
+        #endregion
+
         #region Private Methods
         private async void OnLoad()
         {
@@ -201,10 +210,6 @@ namespace TrainIt.ViewModel
             return returnVal as T;
         }
 
-        private void OnEditUnitCommand()
-        {
-            SelectedView = new UnitEditorViewModel(_trainItService, _dialogCoordinator, (Unit)SelectedItem, this);
-        }
         #endregion
 
         #region Creation Methods

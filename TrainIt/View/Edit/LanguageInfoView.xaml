@@ -22,13 +22,6 @@
         </Grid.RowDefinitions>
 
 
-
-        <Border CornerRadius="8" Grid.Column="1" Grid.Row="1">
-            <Border.Background>
-                <ImageBrush ImageSource="{Binding FlagIconPath}" Stretch="Fill"/>
-            </Border.Background>
-        </Border>
-
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
             <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Top"
                        FontSize="30" Foreground="Black" Width="Auto" Height="60"/>

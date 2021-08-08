@@ -16,7 +16,8 @@ namespace TrainIt.View
             InitializeComponent();
         }
 
-        //Rework: Possible MVVM conform solution for selectedItem and selectedContextMenuItem
+        #region Event Routings
+
         private void TreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (DataContext is EditViewModel viewModel)
@@ -41,19 +42,29 @@ namespace TrainIt.View
             }
         }
 
-        //Rework: Possible MVVM conform solution for Right Click Event
         private void TreeViewItem_PreviewMouseRightButtonDown(object sender, MouseEventArgs e)
         {
             if (DataContext is EditViewModel viewModel)
             {
                 var treeViewItem = EditViewModel.VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject);
 
-                if (treeViewItem == null) 
+                if (treeViewItem == null)
                     return;
 
                 treeViewItem.IsSelected = true;
                 e.Handled = true;
             }
         }
+
+        private void EditTreeView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is EditViewModel viewModel)
+            {
+                if (viewModel.SelectedItem.GetType() == typeof(Unit))
+                    viewModel.OnEditUnitCommand();
+            }
+        }
+
+        #endregion
     }
 }

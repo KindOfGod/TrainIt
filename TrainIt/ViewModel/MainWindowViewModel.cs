@@ -5,8 +5,10 @@ using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ControlzEx.Standard;
 using MahApps.Metro.Controls.Dialogs;
+using TrainIt.Helper;
 using TrainIt.Model;
 using TrainIt.View;
 
@@ -25,6 +27,8 @@ namespace TrainIt.ViewModel
         private TrainItService _trainItService;
         private BaseViewModel _selectedView;
         private ListBoxItem _selectedItem;
+
+        private bool _isMenuClosed;
         #endregion
 
         #region Constructors
@@ -37,6 +41,8 @@ namespace TrainIt.ViewModel
             _editViewModel = new EditViewModel(trainItService, dialogCoordinator);
             _trainViewModel = new TrainViewModel(trainItService, dialogCoordinator);
             _statisticsViewModel = new StatisticsViewModel(trainItService, dialogCoordinator);
+
+            IsMenuClosed = true;
         }
         #endregion
 
@@ -47,11 +53,11 @@ namespace TrainIt.ViewModel
             get => _selectedView;
             set
             {
-                if (_selectedView != value)
-                {
-                    _selectedView = value;
-                    OnPropertyChange();
-                }
+                if (_selectedView == value) 
+                    return;
+
+                _selectedView = value;
+                OnPropertyChange();
             }
         }
 
@@ -60,13 +66,47 @@ namespace TrainIt.ViewModel
             get => _selectedItem;
             set
             {
-                if (_selectedItem != value)
-                {
-                    _selectedItem = value;
-                    OnSelectedItemChange(value);
-                    OnPropertyChange();
-                }
+                if (_selectedItem == value) 
+                    return;
+
+                _selectedItem = value;
+                OnSelectedItemChange(value);
+                OnPropertyChange();
             }
+        }
+
+        public bool IsMenuClosed
+        {
+            get => _isMenuClosed;
+            set
+            {
+                if (_isMenuClosed == value)
+                    return;
+
+                _isMenuClosed = value;
+                OnPropertyChange();
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand OpenButtonCommand => new RelayCommand(p => OnOpenMenu());
+        public ICommand CloseButtonCommand => new RelayCommand(p => OnCloseMenu());
+
+        #endregion
+
+        #region Private Methods
+
+        private void OnOpenMenu()
+        {
+            IsMenuClosed = false;
+        }
+
+        private void OnCloseMenu()
+        {
+            IsMenuClosed = true;
         }
 
         #endregion

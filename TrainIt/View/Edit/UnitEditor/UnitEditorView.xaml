@@ -10,7 +10,7 @@
       xmlns:dd="urn:gong-wpf-dragdrop"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type={x:Type uem:UnitEditorViewModel}, IsDesignTimeCreatable=True}"
-      Background="White">
+      Background="#414047">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,8 +24,8 @@
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
-        <Button Command="{Binding ReturnButtonCommand}" 
-                Grid.Row="2" Grid.Column="2" Width="60" Height="40" Background="MediumSeaGreen" BorderBrush="Transparent">
+        <Button Command="{Binding ReturnButtonCommand}" HorizontalAlignment="Left"
+                Grid.Row="2" Grid.Column="2" Width="60" Height="40" Background="Transparent" BorderBrush="Transparent">
             <materialDesign:PackIcon Kind="CheckAll" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
 
@@ -37,24 +37,24 @@
 
             <StackPanel Grid.Row="1" DataContext="{Binding SelectedWord}">
                 <TextBox FontSize="16" materialDesign:HintAssist.Hint="Primary Language" TextAlignment="Center" Margin="10"
-                         Text="{Binding PrimaryLanguage}"/>
+                         Text="{Binding PrimaryLanguage}" Foreground="White"/>
 
                 <TextBox FontSize="16" materialDesign:HintAssist.Hint="Secondary Language" TextAlignment="Center" Margin="10"
-                         Text="{Binding SecondaryLanguage}"/>
+                         Text="{Binding SecondaryLanguage}" Foreground="White"/>
 
                 <TextBox FontSize="16" materialDesign:HintAssist.Hint="Synonym" TextAlignment="Center" Margin="10"
-                         Text="{Binding Synonym}"/>
+                         Text="{Binding Synonym}" Foreground="White"/>
 
                 <TextBox FontSize="16" materialDesign:HintAssist.Hint="Comment" TextAlignment="Center" Margin="10"
                          TextWrapping="Wrap" AcceptsReturn="True"
-                         Text="{Binding Comment}"/>
+                         Text="{Binding Comment}" Foreground="White"/>
             </StackPanel>
         </Grid>
 
-        <ListBox Grid.Column="2" Grid.Row="1" Margin="10" BorderBrush="DodgerBlue" BorderThickness="3" 
+        <ListBox Grid.Column="2" Grid.Row="1" Margin="10" BorderBrush="#2E2E30" BorderThickness="3"
                  ItemsSource="{Binding Words, Mode=TwoWay}"
                  SelectedItem="{Binding SelectedWord, Mode=TwoWay}" 
-                 VirtualizingStackPanel.IsVirtualizing="True" dd:DragDrop.SelectDroppedItems="True"
+                 VirtualizingStackPanel.IsVirtualizing="True" dd:DragDrop.SelectDroppedItems="True" Foreground="White"
                  dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" dd:DragDrop.UseDefaultDragAdorner="True">
             <ListBox.ItemTemplate>
                 <DataTemplate>
