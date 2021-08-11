@@ -13,7 +13,7 @@
              xmlns:converter="clr-namespace:TrainIt.Converter"
              xmlns:ue="clr-namespace:TrainIt.View.Edit.UnitEditor"
              xmlns:uem="clr-namespace:TrainIt.ViewModel.EditModels.UnitEditorModels"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Background="#414047"
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type=vm:EditViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -32,6 +32,19 @@
         <DataTemplate DataType="{x:Type uem:UnitEditorViewModel}">
             <ue:UnitEditorView/>
         </DataTemplate>
+
+        <Storyboard x:Key="SelectSearchBox">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="SearchBox">
+                <EasingDoubleKeyFrame KeyTime="0" Value="150"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="300"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="UnselectSearchBox">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="SearchBox">
+                <EasingDoubleKeyFrame KeyTime="0" Value="300"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="150"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
 
     <Grid>
@@ -48,24 +61,31 @@
             <ColumnDefinition Width="3*" MinWidth="350"/>
         </Grid.ColumnDefinitions>
 
+        <DockPanel Grid.Column="1" Dock="Right">
+
+            <Border x:Name="SearchBox" Background="#2E2E30" BorderThickness="1" CornerRadius="5" Height="30" Width="150" HorizontalAlignment="Right">
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="5,0,0,0" TextAlignment="Left" BorderBrush="Transparent" CaretBrush="LightGray"
+                         VerticalContentAlignment="Center" Foreground="LightGray" materialDesignMahApps:HintAssist.Hint="Search" SelectionBrush="LightGray"
+                         GotFocus="SearchBox_OnGotFocus" LostFocus="SearchBox_OnLostFocus"/>
+            </Border>
+
+        </DockPanel>
+
         <TreeView x:Name="EditTreeView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      ItemsSource="{Binding LanguageList, IsAsync=True}"
-                      Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3" BorderBrush="#2E2E30"
-                      SelectedItemChanged="TreeView_OnSelectedItemChanged" VirtualizingStackPanel.IsVirtualizing="True" 
-                      FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="0,0,5,0" MouseDoubleClick="EditTreeView_OnMouseDoubleClick">
+                    ItemsSource="{Binding LanguageList, IsAsync=True}"
+                    Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3" BorderBrush="#2E2E30"
+                    SelectedItemChanged="TreeView_OnSelectedItemChanged"
+                    FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="0,0,5,0" MouseDoubleClick="EditTreeView_OnMouseDoubleClick">
 
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
                     <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
+
+                    <Setter Property="Visibility" Value="{Binding IsVisible, Mode=TwoWay}"/>
                 </Style>
             </TreeView.ItemContainerStyle>
-
-            <TreeView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </TreeView.ItemsPanel>
 
             <TreeView.Resources>
                 <ContextMenu x:Key="LanguageContextMenu" StaysOpen="True" Style="{StaticResource MahApps.Styles.ContextMenu}">
@@ -78,12 +98,13 @@
                 </ContextMenu>
                 <ContextMenu x:Key="UnitContextMenu" StaysOpen="True" Style="{StaticResource MahApps.Styles.ContextMenu}">
                     <MenuItem Header="Add Unit"  Command="{Binding CreateButtonCommand}"/>
+                    <MenuItem Header="Edit Unit"  Command="{Binding EditUnitCommand}"/>
                     <MenuItem Header="Delete Unit" Command="{Binding DeleteButtonCommand}"/>
                 </ContextMenu>
             </TreeView.Resources>
 
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Sections, IsAsync=True}" DataType="{x:Type c:Language}">
+                <HierarchicalDataTemplate ItemsSource="{Binding Sections, IsAsync=True}" DataType="{x:Type c:Language}" >
 
                     <!--Language Design-->
                     <StackPanel Orientation="Horizontal">

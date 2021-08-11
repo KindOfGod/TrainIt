@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using TrainIt.Annotations;
 using TrainIt.Classes;
 
 namespace TrainIt.Classes
@@ -31,7 +35,8 @@ namespace TrainIt.Classes
             Edited = edited;
 
             IsNew = isNew;
-            IsExpanded = true;
+            IsExpanded = false;
+            IsVisible = Visibility.Visible;
         }
 
         public Language(Guid id, double grade, string name, string flagIconPath, DateTime created, DateTime edited, DateTime lastLearned, bool isNew)
@@ -46,7 +51,7 @@ namespace TrainIt.Classes
             LastLearned = lastLearned;
 
             IsNew = isNew;
-            IsExpanded = true;
+            IsVisible = Visibility.Visible;
         }
         #endregion
     }

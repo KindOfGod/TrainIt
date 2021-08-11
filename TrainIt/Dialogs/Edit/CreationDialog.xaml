@@ -8,6 +8,8 @@
         xmlns:materialDesignMahApps="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:dialogViewModel="clr-namespace:TrainIt.ViewModel.DialogViewModel"
         xmlns:helper="clr-namespace:TrainIt.Helper"
+        WindowTitleBrush="#202021" NonActiveWindowTitleBrush="#202021" FlyoutOverlayBrush="#202021" GlowBrush="#202021"
+        OverlayBrush="#202021" Background="#414047"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=dialogViewModel:CreationDialogViewModel, IsDesignTimeCreatable=True}"
         Title="Create Language" Height="120" Width="700" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
@@ -42,8 +44,7 @@
         </ComboBox>
 
         <TextBox Height="40" Grid.Row="1" Grid.Column="1" FontSize="20" FontFamily="Consolas" FontWeight="Bold"
-                 VerticalContentAlignment="Bottom" VerticalAlignment="Center" materialDesignMahApps:HintAssist.Hint="Name"
-                 >
+                 VerticalContentAlignment="Bottom" VerticalAlignment="Center" materialDesignMahApps:HintAssist.Hint="Name">
             <TextBox.Text>
                 <Binding Path="Name">
                     <Binding.ValidationRules>

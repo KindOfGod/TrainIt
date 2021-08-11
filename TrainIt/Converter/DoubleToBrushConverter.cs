@@ -37,7 +37,7 @@ namespace TrainIt.Converter
         {
             if (percentage < 50)
                 return Interpolate(Color.FromRgb(203, 88, 88), Color.FromRgb(223, 239, 61), percentage / 50.0);
-            return Interpolate(Color.FromRgb(223, 239, 61), Color.FromRgb(125, 205, 105), (percentage - 50) / 50.0);
+            return Interpolate(Color.FromRgb(223, 239, 61), Color.FromRgb(27, 140, 85), (percentage - 50) / 50.0);
         }
 
         private static Color Interpolate(Color color1, Color color2, double fraction)

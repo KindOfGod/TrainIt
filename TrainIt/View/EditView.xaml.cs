@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using TrainIt.Classes;
 using TrainIt.ViewModel;
 
@@ -60,11 +61,27 @@ namespace TrainIt.View
         {
             if (DataContext is EditViewModel viewModel)
             {
+
+                if(viewModel.SelectedItem == null)
+                    return;
+
                 if (viewModel.SelectedItem.GetType() == typeof(Unit))
                     viewModel.OnEditUnitCommand();
             }
         }
 
         #endregion
+
+        private void SearchBox_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            var sb = FindResource("SelectSearchBox") as Storyboard;
+            sb?.Begin();
+        }
+
+        private void SearchBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            var sb = FindResource("UnselectSearchBox") as Storyboard;
+            sb?.Begin();
+        }
     }
 }

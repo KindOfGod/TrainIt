@@ -9,15 +9,18 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:v="clr-namespace:TrainIt.View"
         xmlns:vm="clr-namespace:TrainIt.ViewModel"
+        xmlns:svm="clr-namespace:TrainIt.ViewModel.SettingsModels"
+        xmlns:s="clr-namespace:TrainIt.View.Settings"
         x:Class="TrainIt.MainWindow" WindowTitleBrush="#202021" NonActiveWindowTitleBrush="#202021" FlyoutOverlayBrush="#202021" GlowBrush="#202021"
-        OverlayBrush="#202021" Background="#414047"
+        OverlayBrush="#202021" Background="#414047" d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d" Title="TrainIt" Height="720" Width="1280" MinWidth="900" MinHeight="450"
         WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button Command="{Binding }" ToolTip="Settings">
-                <materialDesignMahApps:PackIcon Kind="Settings" Width="30" Height="30" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            
+            <Button Command="{Binding SettingsButtonCommand}" ToolTip="Settings">
+                <materialDesignMahApps:PackIcon Kind="Settings" Width="25" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
@@ -35,6 +38,9 @@
         <DataTemplate DataType="{x:Type vm:StatisticsViewModel}">
             <v:StatisticsView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type svm:SettingsViewModel}">
+            <s:SettingsView/>
+        </DataTemplate>
 
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
@@ -50,46 +56,53 @@
         </Storyboard>
     </mah:MetroWindow.Resources>
 
-    <DockPanel Dock="Left">
+    <Grid>
+        <DockPanel Dock="Left">
+            <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="#2E2E30">
+                <StackPanel>
+                    <Grid Height="150" Background="#202021"/>
 
-        <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="#2E2E30">
-            <StackPanel>
-                <Grid Height="150" Background="#202021"/>
+                    <ListView Foreground="White" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListViewItem x:Name="DashboardItem" Height="45" Padding="0">
+                            <StackPanel Orientation="Horizontal" Margin="5, 0">
+                                <materialDesignMahApps:PackIcon Kind="BulletinBoard" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="Dashboard" Margin="10" FontWeight="Bold"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="EditItem" Height="45" Padding="0">
+                            <StackPanel Orientation="Horizontal"  Margin="5, 0">
+                                <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="Edit" Margin="10" FontWeight="Bold"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="TrainItem" Height="45" Padding="0">
+                            <StackPanel Orientation="Horizontal"  Margin="5, 0">
+                                <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="Train" Margin="10" FontWeight="Bold"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="StatisticsItem" Height="45" Padding="0">
+                            <StackPanel Orientation="Horizontal" Margin="5, 0">
+                                <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="Statistics" Margin="10" FontWeight="Bold"/>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
+                </StackPanel>
 
-                <ListView Foreground="White" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListViewItem x:Name="DashboardItem" Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="5, 0">
-                            <materialDesignMahApps:PackIcon Kind="ViewDashboard" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                            <TextBlock Text="Dashboard" Margin="10" FontWeight="Bold"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="EditItem" Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal"  Margin="5, 0">
-                            <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                            <TextBlock Text="Edit" Margin="10" FontWeight="Bold"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="TrainItem" Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal"  Margin="5, 0">
-                            <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                            <TextBlock Text="Train" Margin="10" FontWeight="Bold"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem x:Name="StatisticsItem" Height="45" Padding="0">
-                        <StackPanel Orientation="Horizontal" Margin="5, 0">
-                            <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                            <TextBlock Text="Statistics" Margin="10" FontWeight="Bold"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-            </StackPanel>
+                <Button x:Name="ButtonMenu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Click="ButtonMenu_OnClick">
+                    <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="White" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
 
-            <Button x:Name="ButtonMenu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Click="ButtonMenu_OnClick">
-                <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="White" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
-            </Button>
-        </Grid>
+            <mah:TransitioningContentControl Content="{Binding SelectedViewModel, Mode=TwoWay}"
+                                                        Transition="RightReplace"/>
 
-        <ContentControl Content="{Binding SelectedViewModel, Mode=TwoWay}"/>
+        </DockPanel>
 
-    </DockPanel>
+        <materialDesignMahApps:TransitioningContent Content="{Binding SettingsViewModel}" 
+                                                    Visibility="{Binding SettingsVisible}" 
+                                                    OpeningEffect="{materialDesignMahApps:TransitionEffect SlideInFromTop, Duration=0:0:0.3}"
+                                                    />
+    </Grid>
 </mah:MetroWindow>

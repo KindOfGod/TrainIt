@@ -219,12 +219,12 @@ namespace TrainIt.Model
         {
             double grade = 1;
 
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 2; i++)
             {
                 var language = new Language(Guid.NewGuid(), 1, "Language " + i, @"..\Resources\Flags\DE@3x.png", DateTime.Now, DateTime.Now, true);
                 await SetLanguage(language);
 
-                for (var j = 0; j < 5; j++)
+                for (var j = 0; j < 30; j++)
                 {
                     var section = new Section(Guid.NewGuid(), language.Id, 1, "Section " + j, DateTime.Now, DateTime.Now, DateTime.Now, true);
                     await SetSection(section);
@@ -256,5 +256,5 @@ namespace TrainIt.Model
         }
 
         #endregion
-    }
+    } 
 }

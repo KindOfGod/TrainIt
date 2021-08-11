@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TrainIt.Classes
 {
@@ -31,6 +32,7 @@ namespace TrainIt.Classes
 
             IsNew = isNew;
             IsExpanded = false;
+            IsVisible = Visibility.Visible;
         }
 
         public Unit(Guid id, Guid sectionId, double grade, string name, DateTime created, DateTime edited, DateTime lastLearned, bool isNew)
@@ -46,6 +48,7 @@ namespace TrainIt.Classes
 
             IsNew = isNew;
             IsExpanded = false;
+            IsVisible = Visibility.Visible;
         }
         #endregion
     }

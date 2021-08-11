@@ -1,11 +1,14 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using TrainIt.Classes;
 using TrainIt.Dialogs.Edit;
@@ -13,6 +16,7 @@ using TrainIt.Helper;
 using TrainIt.Model;
 using TrainIt.ViewModel.EditModels;
 using TrainIt.ViewModel.EditModels.UnitEditorModels;
+using Section = TrainIt.Classes.Section;
 
 namespace TrainIt.ViewModel
 {
@@ -32,6 +36,8 @@ namespace TrainIt.ViewModel
         private Visibility _isAnythingSelected = Visibility.Collapsed;
         private Visibility _isUnitSelected = Visibility.Collapsed;
         private object _selectedItem;
+        private string _searchText;
+
         #endregion
 
         #region Properties
@@ -39,7 +45,7 @@ namespace TrainIt.ViewModel
         public ObservableCollection<Language> LanguageList
         {
             get => _languageList;
-            private set
+            set
             {
                 if (_languageList == value) 
                     return;
@@ -114,6 +120,20 @@ namespace TrainIt.ViewModel
                 OnPropertyChange();
             }
         }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText == value)
+                    return;
+
+                _searchText = value;
+                OnSearchTextChanged();
+                OnPropertyChange();
+            }
+        }
         #endregion
 
         #region Constructors
@@ -165,6 +185,9 @@ namespace TrainIt.ViewModel
                     section.Units = new ObservableCollection<Unit>(await _trainItService.GetUnits(section));
                 }
             }
+
+            if (LanguageList.Count != 0)
+                LanguageList[0].IsExpanded = true;
         }
 
         private void OnSelectionChanged(object o)
@@ -193,6 +216,21 @@ namespace TrainIt.ViewModel
             }
         }
 
+        private void OnSearchTextChanged()
+        {
+            foreach (var l in LanguageList)
+            {
+                foreach (var s in l.Sections)
+                {
+                    foreach (var u in s.Units) 
+                        u.IsVisible = u.Name.Contains(SearchText) ? Visibility.Visible : Visibility.Collapsed;
+
+                    s.IsVisible = (s.Name.ToLower().Contains(SearchText.ToLower()) || s.Units.Any(u => u.IsVisible == Visibility.Visible)) ? Visibility.Visible : Visibility.Collapsed;
+                }
+                l.IsVisible = (l.Name.ToLower().Contains(SearchText.ToLower()) || l.Sections.Any(u => u.IsVisible == Visibility.Visible)) ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         public static T VisualUpwardSearch<T>(DependencyObject source) where T : DependencyObject
         {
             var returnVal = source;
@@ -209,7 +247,6 @@ namespace TrainIt.ViewModel
 
             return returnVal as T;
         }
-
         #endregion
 
         #region Creation Methods
@@ -217,7 +254,7 @@ namespace TrainIt.ViewModel
         {
             if (SelectedItem.GetType() == typeof(Section))
                 await CreateUnit((Section)SelectedItem);
-            else
+            else if (SelectedItem.GetType() == typeof(Language))
                 await CreateSection((Language)SelectedItem);
         }
 
