@@ -36,8 +36,8 @@ namespace TrainIt.Converter
         private static Color GetBlendedColor(int percentage)
         {
             if (percentage < 50)
-                return Interpolate(Color.FromRgb(203, 88, 88), Color.FromRgb(223, 239, 61), percentage / 50.0);
-            return Interpolate(Color.FromRgb(223, 239, 61), Color.FromRgb(27, 140, 85), (percentage - 50) / 50.0);
+                return Interpolate(Color.FromRgb(203, 88, 88), Color.FromRgb(202, 213, 3), percentage / 50.0);
+            return Interpolate(Color.FromRgb(202, 213, 3), Color.FromRgb(27, 140, 85), (percentage - 50) / 50.0);
         }
 
         private static Color Interpolate(Color color1, Color color2, double fraction)

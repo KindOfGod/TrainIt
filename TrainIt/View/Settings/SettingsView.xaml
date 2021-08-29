@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TrainIt.View.Settings"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             mc:Ignorable="d"
+             xmlns:sm="clr-namespace:TrainIt.ViewModel.SettingsModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance Type={x:Type sm:SettingsViewModel}, IsDesignTimeCreatable=True}"
              d:DesignHeight="720" d:DesignWidth="1280" Background="#414047">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type sm:GeneralSettingsViewModel}">
+            <local:GeneralSettingsView/>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid>
 
@@ -20,12 +27,14 @@
         <Rectangle Grid.ColumnSpan="2" Fill="#2E2E30"/>
 
         <StackPanel Margin="0,50,0,50" Grid.Column="1">
-            <ListBox SelectedIndex="0">
+            <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedItem}">
+                <ListBoxItem x:Name="GeneralSettings" Content="General" Foreground="LightGray" FontSize="16"/>
                 <ListBoxItem Content="Appearance" Foreground="LightGray" FontSize="16"/>
+                <ListBoxItem Content="Performance" Foreground="LightGray" FontSize="16"/>
                 <ListBoxItem Content="Advanced" Foreground="LightGray" FontSize="16"/>
             </ListBox>
         </StackPanel>
 
-        <!--<mah:TransitioningContentControl />-->
+        <mah:TransitioningContentControl Grid.Column="2" Content="{Binding SelectedViewModel}" Margin="0,50,0,50"/>
     </Grid>
 </UserControl>

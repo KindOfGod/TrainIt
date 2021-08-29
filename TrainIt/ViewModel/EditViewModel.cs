@@ -275,6 +275,7 @@ namespace TrainIt.ViewModel
                 true
                 );
             await _trainItService.SetUnit(unit);
+            section.Units.Add(unit);
         }
 
         private async Task CreateSection(Language language)
@@ -294,6 +295,7 @@ namespace TrainIt.ViewModel
                 true
                 );
             await _trainItService.SetSection(sec);
+            language.Sections.Add(sec);
         }
 
         private async void OnCreateLanguage()
@@ -314,6 +316,7 @@ namespace TrainIt.ViewModel
             );
 
             await _trainItService.SetLanguage(lan);
+            _languageList.Add(lan);
         }
 
         #endregion

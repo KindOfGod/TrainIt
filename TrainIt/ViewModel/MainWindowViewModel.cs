@@ -51,6 +51,8 @@ namespace TrainIt.ViewModel
             _statisticsViewModel = new StatisticsViewModel(trainItService, dialogCoordinator);
             _settingsViewModel = new SettingsViewModel();
 
+            SettingsService.ReadSettings();
+
             IsMenuClosed = true;
             SettingsVisible = Visibility.Collapsed;
         }
@@ -157,6 +159,7 @@ namespace TrainIt.ViewModel
             {
                 SettingsVisible = Visibility.Collapsed;
                 SettingsViewModel = null;
+                SettingsService.SaveSetting();
             }
         }
         #endregion

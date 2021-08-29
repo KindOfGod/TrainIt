@@ -38,25 +38,24 @@ namespace TrainIt.Helper
 
         private void CreateDatabase()
         {
-            using (var cmd = new SQLiteCommand(_myConnection))
-            {
-                cmd.CommandText = @"CREATE TABLE languages(Id GUID PRIMARY KEY, Name TEXT NOT NULL, Grade REAL NOT NULL, "
-                                  + "FlagIconPath TEXT NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
-                cmd.ExecuteNonQuery();
+            using var cmd = new SQLiteCommand(_myConnection);
 
-                cmd.CommandText = @"CREATE TABLE sections(Id GUID PRIMARY KEY, Name TEXT NOT NULL, LanguageId GUID NOT NULL, "
-                                  + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
-                cmd.ExecuteNonQuery();
+            cmd.CommandText = @"CREATE TABLE languages(Id GUID PRIMARY KEY, Name TEXT NOT NULL, Grade REAL NOT NULL, "
+                              + "FlagIconPath TEXT NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
+            cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE units(Id GUID PRIMARY KEY, Name TEXT NOT NULL, SectionId GUID NOT NULL, "
-                                  + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
-                cmd.ExecuteNonQuery();
+            cmd.CommandText = @"CREATE TABLE sections(Id GUID PRIMARY KEY, Name TEXT NOT NULL, LanguageId GUID NOT NULL, "
+                              + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
+            cmd.ExecuteNonQuery();
 
-                cmd.CommandText = @"CREATE TABLE words(Id GUID PRIMARY KEY, PreviousWordId GUID, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, "
-                                  + "Comment TEXT, Synonym TEXT, UnitId GUID NOT NULL, Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, "
-                                  + "Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
-                cmd.ExecuteNonQuery();
-            }
+            cmd.CommandText = @"CREATE TABLE units(Id GUID PRIMARY KEY, Name TEXT NOT NULL, SectionId GUID NOT NULL, "
+                              + "Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
+            cmd.ExecuteNonQuery();
+
+            cmd.CommandText = @"CREATE TABLE words(Id GUID PRIMARY KEY, PreviousWordId GUID, pLanguage TEXT NOT NULL, sLanguage TEXT NOT NULL, "
+                              + "Comment TEXT, Synonym TEXT, UnitId GUID NOT NULL, Grade REAL NOT NULL, LastLearned DATETIME NOT NULL, "
+                              + "Edited DATETIME NOT NULL, Created DATETIME NOT NULL)";
+            cmd.ExecuteNonQuery();
         }
 
         public void OpenConnection()

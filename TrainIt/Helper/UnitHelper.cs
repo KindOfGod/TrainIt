@@ -14,9 +14,11 @@ namespace TrainIt.Helper
         //bug: topologisches Sortieren (bruch in der Liste)
         public static void SortUnit(ref ObservableCollection<Word> collection)
         {
+            if (collection.Count == 0)
+                return;
+
             var map = collection.ToDictionary(w => w.PreviousWordId);
             var words = new ObservableCollection<Word>();
-
 
             var currentWord = map[Guid.Empty];
             words.Add(currentWord);
