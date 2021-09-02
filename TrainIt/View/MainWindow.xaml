@@ -56,53 +56,56 @@
         </Storyboard>
     </mah:MetroWindow.Resources>
 
-    <Grid>
-        <DockPanel Dock="Left">
-            <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="#2E2E30">
-                <StackPanel>
-                    <Grid Height="150" Background="#202021"/>
+    <materialDesignMahApps:DialogHost Identifier="RootHost" CloseOnClickAway="True" BorderBrush="{DynamicResource MaterialDesignDivider}">
+        <Grid>
+            <DockPanel Dock="Left">
+                <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="#2E2E30">
+                    <StackPanel>
+                        <Grid Height="150" Background="#202021"/>
 
-                    <ListView Foreground="White" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                        <ListViewItem x:Name="DashboardItem" Height="45" Padding="0">
-                            <StackPanel Orientation="Horizontal" Margin="5, 0">
-                                <materialDesignMahApps:PackIcon Kind="BulletinBoard" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Dashboard" Margin="10" FontWeight="Bold"/>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem x:Name="EditItem" Height="45" Padding="0">
-                            <StackPanel Orientation="Horizontal"  Margin="5, 0">
-                                <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Edit" Margin="10" FontWeight="Bold"/>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem x:Name="TrainItem" Height="45" Padding="0">
-                            <StackPanel Orientation="Horizontal"  Margin="5, 0">
-                                <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Train" Margin="10" FontWeight="Bold"/>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem x:Name="StatisticsItem" Height="45" Padding="0">
-                            <StackPanel Orientation="Horizontal" Margin="5, 0">
-                                <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
-                                <TextBlock Text="Statistics" Margin="10" FontWeight="Bold"/>
-                            </StackPanel>
-                        </ListViewItem>
-                    </ListView>
-                </StackPanel>
+                        <ListView Foreground="White" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListViewItem x:Name="DashboardItem" Height="45" Padding="0">
+                                <StackPanel Orientation="Horizontal" Margin="5, 0">
+                                    <materialDesignMahApps:PackIcon Kind="BulletinBoard" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Dashboard" Margin="10" FontWeight="Bold"/>
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="EditItem" Height="45" Padding="0">
+                                <StackPanel Orientation="Horizontal"  Margin="5, 0">
+                                    <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Edit" Margin="10" FontWeight="Bold"/>
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="TrainItem" Height="45" Padding="0">
+                                <StackPanel Orientation="Horizontal"  Margin="5, 0">
+                                    <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Train" Margin="10" FontWeight="Bold"/>
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="StatisticsItem" Height="45" Padding="0">
+                                <StackPanel Orientation="Horizontal" Margin="5, 0">
+                                    <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Statistics" Margin="10" FontWeight="Bold"/>
+                                </StackPanel>
+                            </ListViewItem>
+                        </ListView>
+                    </StackPanel>
 
-                <Button x:Name="ButtonMenu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Click="ButtonMenu_OnClick">
-                    <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="White" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
-                </Button>
-            </Grid>
+                    <Button x:Name="ButtonMenu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Click="ButtonMenu_OnClick">
+                        <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="White" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
 
-            <mah:TransitioningContentControl Content="{Binding SelectedViewModel, Mode=TwoWay}"
-                                                        Transition="RightReplace"/>
+                <mah:TransitioningContentControl Content="{Binding SelectedViewModel, Mode=TwoWay}"
+                                                 Transition="RightReplace"/>
 
-        </DockPanel>
+            </DockPanel>
 
-        <materialDesignMahApps:TransitioningContent Content="{Binding SettingsViewModel}" 
-                                                    Visibility="{Binding SettingsVisible}" 
-                                                    OpeningEffect="{materialDesignMahApps:TransitionEffect SlideInFromTop, Duration=0:0:0.3}"
-                                                    />
-    </Grid>
+            <materialDesignMahApps:TransitioningContent Content="{Binding SettingsViewModel}" 
+                                                        Visibility="{Binding SettingsVisible}" 
+                                                        OpeningEffect="{materialDesignMahApps:TransitionEffect SlideInFromTop, Duration=0:0:0.3}"
+                                                        />
+        </Grid>
+    </materialDesignMahApps:DialogHost>
 </mah:MetroWindow>
+

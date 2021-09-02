@@ -10,10 +10,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+using MaterialDesignThemes.Wpf;
 using TrainIt.Classes;
-using TrainIt.Dialogs.Edit;
 using TrainIt.Helper;
 using TrainIt.Model;
+using TrainIt.ViewModel.DialogViewModels;
 using TrainIt.ViewModel.EditModels;
 using TrainIt.ViewModel.EditModels.UnitEditorModels;
 using Section = TrainIt.Classes.Section;
@@ -260,16 +261,17 @@ namespace TrainIt.ViewModel
 
         private async Task CreateUnit(Section section)
         {
-            var dialog = new CreateLanguageDialog(_trainItService, _dialogCoordinator, 2);
+            var vm = new CreationDialogViewModel(2);
+            var result = await DialogService.OpenDialog(vm);
 
-            if (dialog.ShowDialog() != true)
+            if(result == null || result.Equals(false))
                 return;
 
             var unit = new Unit(
                 Guid.NewGuid(),
                 section.Id,
                 3,
-                dialog._createLanguageDialogViewModel.Name,
+                vm.Name,
                 DateTime.Now,
                 DateTime.Now,
                 true
@@ -280,16 +282,17 @@ namespace TrainIt.ViewModel
 
         private async Task CreateSection(Language language)
         {
-            var dialog = new CreateLanguageDialog(_trainItService, _dialogCoordinator, 1);
+            var vm = new CreationDialogViewModel(1);
+            var result = await DialogService.OpenDialog(vm);
 
-            if (dialog.ShowDialog() != true)
+            if(result == null || result.Equals(false))
                 return;
 
             var sec = new Section(
                 Guid.NewGuid(),
                 language.Id,
                 3,
-                dialog._createLanguageDialogViewModel.Name,
+                vm.Name,
                 DateTime.Now,
                 DateTime.Now,
                 true
@@ -300,16 +303,17 @@ namespace TrainIt.ViewModel
 
         private async void OnCreateLanguage()
         {
-            var dialog = new CreateLanguageDialog(_trainItService, _dialogCoordinator, 0);
+            var vm = new CreationDialogViewModel(0);
+            var result = await DialogService.OpenDialog(vm);
 
-            if (dialog.ShowDialog() != true) 
+            if(result == null || result.Equals(false))
                 return;
 
             var lan = new Language(
                 Guid.NewGuid(),
                 3,
-                dialog._createLanguageDialogViewModel.Name,
-                dialog._createLanguageDialogViewModel.SelectedIcon,
+                vm.Name,
+                vm.SelectedIcon,
                 DateTime.Now, 
                 DateTime.Now,
                 true
@@ -350,14 +354,18 @@ namespace TrainIt.ViewModel
             items.Add((Language)_selectedItem);
 
             await _trainItService.DeleteLanguages(items);
-            await _trainItService.DeleteSections(item.Sections);
-
-            foreach (var section in item.Sections)
+            
+            if (item.Sections != null)
             {
-                await _trainItService.DeleteUnits(section.Units);
+                await _trainItService.DeleteSections(item.Sections);
 
-                foreach (var unit in section.Units) 
-                    await _trainItService.DeleteWords(unit.Words);
+                foreach (var section in item.Sections)
+                {
+                    await _trainItService.DeleteUnits(section.Units);
+
+                    foreach (var unit in section.Units) 
+                        await _trainItService.DeleteWords(unit.Words);
+                }
             }
 
             LanguageList.Remove(item);
@@ -371,11 +379,15 @@ namespace TrainIt.ViewModel
             items.Add((Section)_selectedItem);
 
             await _trainItService.DeleteSections(items);
-            await _trainItService.DeleteUnits(item.Units);
-
-            foreach (var unit in item.Units)
+            
+            if (item.Units != null)
             {
-                await _trainItService.DeleteWords(unit.Words);
+                await _trainItService.DeleteUnits(item.Units);
+
+                foreach (var unit in item.Units)
+                {
+                    await _trainItService.DeleteWords(unit.Words);
+                }
             }
 
             LanguageList.FirstOrDefault(x => x.Sections.Contains(item))?.Sections.Remove(item);
@@ -389,7 +401,9 @@ namespace TrainIt.ViewModel
             items.Add((Unit)_selectedItem);
 
             await _trainItService.DeleteUnits(items);
-            await _trainItService.DeleteWords(item.Words);
+
+            if(item.Words != null)
+                await _trainItService.DeleteWords(item.Words);
 
             LanguageList.FirstOrDefault(x => x.Sections.ToList().Exists(y => y.Units.Contains(item)))
                 ?.Sections.FirstOrDefault(x => x.Units.Contains(item))

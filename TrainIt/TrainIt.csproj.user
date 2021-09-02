@@ -7,9 +7,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Dialogs\Edit\CreationDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="View\DashboardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -42,7 +39,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Dialogs\Edit\CreationDialog.xaml">
+    <Page Update="Dialogs\Edit\CreationDialogs.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Styles\CustomScrollbarStyle.xaml">

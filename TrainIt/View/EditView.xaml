@@ -9,10 +9,11 @@
              xmlns:vme="clr-namespace:TrainIt.ViewModel.EditModels"
              xmlns:c="clr-namespace:TrainIt.Classes"
              xmlns:v="clr-namespace:TrainIt.View.Edit"
-             xmlns:helper="clr-namespace:TrainIt.Helper"
              xmlns:converter="clr-namespace:TrainIt.Converter"
              xmlns:ue="clr-namespace:TrainIt.View.Edit.UnitEditor"
              xmlns:uem="clr-namespace:TrainIt.ViewModel.EditModels.UnitEditorModels"
+             xmlns:dialogViewModels="clr-namespace:TrainIt.ViewModel.DialogViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" Background="#414047"
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type=vm:EditViewModel, IsDesignTimeCreatable=True}">
 
@@ -63,14 +64,14 @@
 
         <DockPanel Grid.Column="1" Dock="Right">
 
-            <Border x:Name="SearchBox" Background="#2E2E30" BorderThickness="1" CornerRadius="5" Height="30" Width="150" HorizontalAlignment="Right">
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="5,0,0,0" TextAlignment="Left" BorderBrush="Transparent" CaretBrush="LightGray"
-                         VerticalContentAlignment="Center" Foreground="LightGray" materialDesignMahApps:HintAssist.Hint="Search" SelectionBrush="LightGray"
-                         GotFocus="SearchBox_OnGotFocus" LostFocus="SearchBox_OnLostFocus"/>
-            </Border>
+                <Border x:Name="SearchBox" Background="#2E2E30" BorderThickness="1" CornerRadius="5" Height="30" Width="150" HorizontalAlignment="Right">
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="5,0,0,0" TextAlignment="Left" BorderBrush="Transparent" CaretBrush="LightGray"
+                             VerticalContentAlignment="Center" Foreground="LightGray" materialDesignMahApps:HintAssist.Hint="Search" SelectionBrush="LightGray"
+                             GotFocus="SearchBox_OnGotFocus" LostFocus="SearchBox_OnLostFocus"/>
+                </Border>
 
-        </DockPanel>
+            </DockPanel>
 
         <TreeView x:Name="EditTreeView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     ItemsSource="{Binding LanguageList, IsAsync=True}"
@@ -195,7 +196,7 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <Button Margin="10,0,0,0" Width="60" Height="40" VerticalAlignment="Center"
                         Background="Transparent" BorderBrush="Transparent" ToolTip="Create Language" BorderThickness="0"
-                        Command="{Binding CreateLanguageCommand}">
+                        Command="{ Binding CreateLanguageCommand}">
                     <materialDesignMahApps:PackIcon Kind="Language" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
             </StackPanel>
@@ -226,6 +227,6 @@
 
         <ContentControl Content="{Binding SelectedView, Mode=TwoWay}"
                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
-
     </Grid>
+
 </UserControl>

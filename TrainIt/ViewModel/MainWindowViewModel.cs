@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +35,6 @@ namespace TrainIt.ViewModel
 
         private bool _isMenuClosed;
         private Visibility _settingsVisible;
-
         #endregion
 
         #region Constructors
@@ -125,7 +125,6 @@ namespace TrainIt.ViewModel
                 OnPropertyChange();
             }
         }
-
         #endregion
 
         #region Commands
@@ -152,6 +151,8 @@ namespace TrainIt.ViewModel
         {
             if (SettingsVisible == Visibility.Collapsed)
             {
+                DialogService.CloseAllDialogs();
+
                 SettingsVisible = Visibility.Visible;
                 SettingsViewModel = _settingsViewModel;
             }

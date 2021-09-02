@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
 using TrainIt.Model;
 using TrainIt.ViewModel;
@@ -30,6 +31,8 @@ namespace TrainIt
 
                 _trainItService = new TrainItService(_dialogCoordinator);
                 mainView.DataContext = new MainWindowViewModel(_trainItService , _dialogCoordinator);
+
+                RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
             }
             catch (Exception ex)
             {

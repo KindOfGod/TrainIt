@@ -293,4 +293,8 @@
     <Resource Include="Resources\Flags\US@3x.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>

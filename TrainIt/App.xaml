@@ -24,6 +24,9 @@
 
                 <!-- Styles -->
                 <ResourceDictionary Source="Resources/Styles/CustomScrollbarStyle.xaml"/>
+
+                <!-- Dialogs -->
+                <ResourceDictionary Source="Dialogs/Edit/CreationDialogs.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

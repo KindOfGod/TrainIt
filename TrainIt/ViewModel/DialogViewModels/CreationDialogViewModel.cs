@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using TrainIt.Helper;
+using MaterialDesignThemes.Wpf;
+using TrainIt.Interfaces;
 using TrainIt.Model;
 
-namespace TrainIt.ViewModel.DialogViewModel
+namespace TrainIt.ViewModel.DialogViewModels
 {
-    public class CreationDialogViewModel : BaseViewModel
+    public class CreationDialogViewModel : BaseViewModel, IDialog
     {
         private readonly TrainItService _trainItService;
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -77,22 +80,13 @@ namespace TrainIt.ViewModel.DialogViewModel
         #endregion
 
         #region Constructors
-        public CreationDialogViewModel(){}
 
-        public CreationDialogViewModel(TrainItService trainItService, IDialogCoordinator dialogCoordinator, int mode)
+        public CreationDialogViewModel() { }
+
+        public CreationDialogViewModel(int mode)
         {
-            _trainItService = trainItService;
-            _dialogCoordinator = dialogCoordinator;
-            _mode = mode;
-
             SetDialogSettings();
-        }
-        #endregion
-
-        #region Public Methods
-        public bool IsInputValid()
-        {
-            return true;
+            _mode = mode;
         }
         #endregion
 
