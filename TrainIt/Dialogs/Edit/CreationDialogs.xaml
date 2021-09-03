@@ -8,7 +8,7 @@
             <DataTemplate DataType="{x:Type dialogViewModels:CreationDialogViewModel}">
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#414047">
                     <StackPanel Orientation="Horizontal" Height="60" Margin="15">
-                        <ComboBox x:Name="FlagComboBox" Width="60" Height="40" IsSynchronizedWithCurrentItem="True" SelectedIndex="54" Visibility="{Binding HasIcon}"
+                        <ComboBox Width="60" Height="40" IsSynchronizedWithCurrentItem="True" SelectedIndex="54" Visibility="{Binding HasIcon}"
                                   ItemsSource="{Binding Paths}" SelectedItem="{Binding SelectedIcon}"
                                   Margin="0,0,10,0" BorderBrush="Transparent">
                             <ComboBox.ItemsPanel>
@@ -20,7 +20,7 @@
                                 <DataTemplate>
                                     <Border Width="40" Height="30" CornerRadius="8">
                                         <Border.Background>
-                                            <ImageBrush ImageSource="{Binding }" Stretch="Fill"/>
+                                            <ImageBrush x:Name="FlagComboBox" ImageSource="{Binding }" Stretch="Fill"/>
                                         </Border.Background>
                                     </Border>
                                 </DataTemplate>
