@@ -19,7 +19,7 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             
-            <Button Command="{Binding SettingsButtonCommand}" ToolTip="Settings">
+            <Button Command="{Binding SettingsButtonCommand}" ToolTip="UserSettings">
                 <materialDesignMahApps:PackIcon Kind="Settings" Width="25" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
         </mah:WindowCommands>

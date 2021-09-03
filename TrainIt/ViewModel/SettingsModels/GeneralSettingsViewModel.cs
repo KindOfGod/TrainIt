@@ -17,13 +17,13 @@ namespace TrainIt.ViewModel.SettingsModels
 
         public double WordStartGrade
         {
-            get => SettingsService._settings.WordStartGrade;
+            get => SettingsService.UserSettings.WordStartGrade;
             set
             {
-                if(Math.Abs(SettingsService._settings.WordStartGrade - value) < 0.05)
+                if(Math.Abs(SettingsService.UserSettings.WordStartGrade - value) < 0.05)
                     return;
 
-                SettingsService._settings.WordStartGrade = Math.Round(value, 1);
+                SettingsService.UserSettings.WordStartGrade = Math.Round(value, 1);
                 OnPropertyChange();
             }
         }

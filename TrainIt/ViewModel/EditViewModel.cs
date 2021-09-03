@@ -175,15 +175,15 @@ namespace TrainIt.ViewModel
         #region Private Methods
         private async void OnLoad()
         {
-            LanguageList = new ObservableCollection<Language>(await _trainItService.GetLanguages());
+            LanguageList = new ObservableCollection<Language>(await DatabaseService.GetLanguages());
 
             foreach (var language in LanguageList)
             {
-                language.Sections = new ObservableCollection<Section>(await _trainItService.GetSections(language));
+                language.Sections = new ObservableCollection<Section>(await DatabaseService.GetSections(language));
 
                 foreach (var section in language.Sections)
                 {
-                    section.Units = new ObservableCollection<Unit>(await _trainItService.GetUnits(section));
+                    section.Units = new ObservableCollection<Unit>(await DatabaseService.GetUnits(section));
                 }
             }
 
@@ -259,7 +259,7 @@ namespace TrainIt.ViewModel
                 await CreateSection((Language)SelectedItem);
         }
 
-        private async Task CreateUnit(Section section)
+        private static async Task CreateUnit(Section section)
         {
             var vm = new CreationDialogViewModel(2);
             var result = await DialogService.OpenDialog(vm);
@@ -276,11 +276,11 @@ namespace TrainIt.ViewModel
                 DateTime.Now,
                 true
                 );
-            await _trainItService.SetUnit(unit);
+            await DatabaseService.SetUnit(unit);
             section.Units.Add(unit);
         }
 
-        private async Task CreateSection(Language language)
+        private static async Task CreateSection(Language language)
         {
             var vm = new CreationDialogViewModel(1);
             var result = await DialogService.OpenDialog(vm);
@@ -297,7 +297,7 @@ namespace TrainIt.ViewModel
                 DateTime.Now,
                 true
                 );
-            await _trainItService.SetSection(sec);
+            await DatabaseService.SetSection(sec);
             language.Sections.Add(sec);
         }
 
@@ -319,7 +319,7 @@ namespace TrainIt.ViewModel
                 true
             );
 
-            await _trainItService.SetLanguage(lan);
+            await DatabaseService.SetLanguage(lan);
             _languageList.Add(lan);
         }
 
@@ -353,18 +353,18 @@ namespace TrainIt.ViewModel
 
             items.Add((Language)_selectedItem);
 
-            await _trainItService.DeleteLanguages(items);
+            await DatabaseService.DeleteLanguages(items);
             
             if (item.Sections != null)
             {
-                await _trainItService.DeleteSections(item.Sections);
+                await DatabaseService.DeleteSections(item.Sections);
 
                 foreach (var section in item.Sections)
                 {
-                    await _trainItService.DeleteUnits(section.Units);
+                    await DatabaseService.DeleteUnits(section.Units);
 
                     foreach (var unit in section.Units) 
-                        await _trainItService.DeleteWords(unit.Words);
+                        await DatabaseService.DeleteWords(unit.Words);
                 }
             }
 
@@ -378,15 +378,15 @@ namespace TrainIt.ViewModel
 
             items.Add((Section)_selectedItem);
 
-            await _trainItService.DeleteSections(items);
+            await DatabaseService.DeleteSections(items);
             
             if (item.Units != null)
             {
-                await _trainItService.DeleteUnits(item.Units);
+                await DatabaseService.DeleteUnits(item.Units);
 
                 foreach (var unit in item.Units)
                 {
-                    await _trainItService.DeleteWords(unit.Words);
+                    await DatabaseService.DeleteWords(unit.Words);
                 }
             }
 
@@ -400,10 +400,10 @@ namespace TrainIt.ViewModel
 
             items.Add((Unit)_selectedItem);
 
-            await _trainItService.DeleteUnits(items);
+            await DatabaseService.DeleteUnits(items);
 
             if(item.Words != null)
-                await _trainItService.DeleteWords(item.Words);
+                await DatabaseService.DeleteWords(item.Words);
 
             LanguageList.FirstOrDefault(x => x.Sections.ToList().Exists(y => y.Units.Contains(item)))
                 ?.Sections.FirstOrDefault(x => x.Units.Contains(item))

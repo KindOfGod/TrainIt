@@ -15,10 +15,8 @@ namespace TrainIt.ViewModel.DialogViewModels
 {
     public class CreationDialogViewModel : BaseViewModel, IDialog
     {
-        private readonly TrainItService _trainItService;
-        private readonly IDialogCoordinator _dialogCoordinator;
         private ObservableCollection<string> _paths;
-        private Visibility _hasIcon = Visibility.Hidden;
+        private Visibility _hasIcon = Visibility.Collapsed;
         private string _selectedIcon;
         private string _name;
         private readonly int _mode;

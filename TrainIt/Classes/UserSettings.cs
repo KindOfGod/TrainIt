@@ -11,7 +11,7 @@ using TrainIt.ViewModel;
 
 namespace TrainIt.Classes
 {
-    public sealed class Settings : BaseViewModel
+    public sealed class UserSettings : BaseViewModel
     {
         #region Fields
 

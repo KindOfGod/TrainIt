@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TrainIt.Classes;
@@ -9,19 +10,174 @@ using TrainIt.Helper;
 
 namespace TrainIt.Model
 {
-    public class DatabaseService : IDisposable
+    public static class DatabaseService
     {
-        private readonly Database _myDatabase;
-
+        #region Fields
+        private static readonly Database _myDatabase;
+        #endregion
+        
         #region Constructors
-        public DatabaseService()
+        static DatabaseService()
         {
             _myDatabase = new Database();
         }
         #endregion
 
-        #region Read Methods
-        public async Task<List<Language>> GetLanguages()
+        #region Public Methods
+
+        public static async Task<List<Language>> GetLanguages()
+        {
+            try
+            {
+                return await DbGetLanguages();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        public static async Task<List<Section>> GetSections(Language language)
+        {
+            try
+            {
+                return await DbGetSections(language);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public static async Task<List<Unit>> GetUnits(Section section)
+        {
+            try
+            {
+                return await DbGetUnits(section);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public static async Task<List<Word>> GetWords(Unit unit)
+        {
+            try
+            {
+                return await DbGetWords(unit);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public static async Task SetLanguage(Language language)
+        {
+            try
+            {
+                await DbSetLanguage(language);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task SetSection(Section section)
+        {
+            try
+            {
+                await DbSetSection(section);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task SetUnit(Unit unit)
+        {
+            try
+            {
+                await DbSetUnit(unit);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task SetWord(Word word)
+        {
+            try
+            {
+                await DbSetWord(word);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task DeleteLanguages(IEnumerable<Language> languages)
+        {
+            try
+            {
+                await DbDeleteLanguage(languages);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task DeleteSections(IEnumerable<Section> sections)
+        {
+            try
+            {
+                await DbDeleteSection(sections);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task DeleteUnits(IEnumerable<Unit> units)
+        {
+            try
+            {
+                await DbDeleteUnit(units);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static async Task DeleteWords(IEnumerable<Word> words)
+        {
+            try
+            {
+                await DbDeleteWord(words);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static async Task<List<Language>> DbGetLanguages()
         {
             var languages = new List<Language>();
 
@@ -50,7 +206,7 @@ namespace TrainIt.Model
             return languages;
         }
 
-        public async Task<List<Section>> GetSections(Language language)
+        private static async Task<List<Section>> DbGetSections(Language language)
         {
             var sections = new List<Section>();
 
@@ -80,7 +236,7 @@ namespace TrainIt.Model
             return sections;
         }
 
-        public async Task<List<Unit>> GetUnits(Section section)
+        private static async Task<List<Unit>> DbGetUnits(Section section)
         {
             var units = new List<Unit>();
 
@@ -110,7 +266,7 @@ namespace TrainIt.Model
             return units;
         }
 
-        public async Task<List<Word>> GetWords(Unit unit)
+        private static async Task<List<Word>> DbGetWords(Unit unit)
         {
             var words = new List<Word>();
 
@@ -134,20 +290,19 @@ namespace TrainIt.Model
                         (DateTime)r["Edited"],
                         (DateTime)r["LastLearned"],
                         false
-                        );
+                        )
+                    {
+                        PreviousWordId = (Guid)r["PreviousWordId"]
+                    };
 
-                    word.PreviousWordId = (Guid)r["PreviousWordId"];
                     words.Add(word);
                 }
             }
 
             return words;
         }
-        #endregion
 
-        #region Write Methods
-
-        public async Task SetLanguage(Language language)
+        private static async Task DbSetLanguage(Language language)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -169,7 +324,7 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task SetSection(Section section)
+        private static async Task DbSetSection(Section section)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -191,7 +346,7 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task SetUnit(Unit unit)
+        private static async Task DbSetUnit(Unit unit)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -213,7 +368,7 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task SetWord(Word word)
+        private static async Task DbSetWord(Word word)
         {
             using (var cmd = new SQLiteCommand(_myDatabase._myConnection))
             {
@@ -240,11 +395,8 @@ namespace TrainIt.Model
                 await cmd.ExecuteNonQueryAsync();
             }
         }
-        #endregion
 
-        #region Delete Methods
-
-        public async Task DeleteLanguage(IEnumerable<Language> languages)
+        private static async Task DbDeleteLanguage(IEnumerable<Language> languages)
         {
             if (languages == null) 
                 return;
@@ -263,7 +415,7 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteSection(IEnumerable<Section> sections)
+        private static async Task DbDeleteSection(IEnumerable<Section> sections)
         {
             if (sections == null)
                 return;
@@ -282,7 +434,7 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteUnit(IEnumerable<Unit> units)
+        private static async Task DbDeleteUnit(IEnumerable<Unit> units)
         {
             if (units == null)
                 return;
@@ -301,7 +453,7 @@ namespace TrainIt.Model
             }
         }
 
-        public async Task DeleteWord(IEnumerable<Word> words)
+        private static async Task DbDeleteWord(IEnumerable<Word> words)
         {
             if (words == null)
                 return;
@@ -319,10 +471,9 @@ namespace TrainIt.Model
                 }
             }
         }
-
         #endregion
 
-        public void Dispose()
+        public static void Dispose()
         {
             _myDatabase.Dispose();
         }

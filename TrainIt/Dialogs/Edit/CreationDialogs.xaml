@@ -6,7 +6,7 @@
                     xmlns:helper="clr-namespace:TrainIt.Helper">
 
             <DataTemplate DataType="{x:Type dialogViewModels:CreationDialogViewModel}">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#414047">
                     <StackPanel Orientation="Horizontal" Height="60" Margin="15">
                         <ComboBox x:Name="FlagComboBox" Width="60" Height="40" IsSynchronizedWithCurrentItem="True" SelectedIndex="54" Visibility="{Binding HasIcon}"
                                   ItemsSource="{Binding Paths}" SelectedItem="{Binding SelectedIcon}"
@@ -49,7 +49,7 @@
                         </Button>
                         <Button Content="Cancel" Style="{DynamicResource MaterialDesignFlatButton}"
                                 Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                MinWidth="100" Margin="4" VerticalAlignment="Center">
+                                MinWidth="100" Margin="4" VerticalAlignment="Center" Foreground="White">
                             <Button.CommandParameter>
                                 <system:Boolean>false</system:Boolean>
                             </Button.CommandParameter>

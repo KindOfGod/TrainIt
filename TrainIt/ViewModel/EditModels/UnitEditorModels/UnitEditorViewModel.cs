@@ -86,7 +86,7 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
             {
                 if (word.IsEdited)
                 {
-                    await _trainItService.SetWord(word);
+                    await DatabaseService.SetWord(word);
                     word.IsEdited = false;
                 }
             }
@@ -96,7 +96,7 @@ namespace TrainIt.ViewModel.EditModels.UnitEditorModels
         #region Privat Methods
         private async void OnLoad()
         {
-            var words = new ObservableCollection<Word>(await _trainItService.GetWords(_selectedUnit));
+            var words = new ObservableCollection<Word>(await DatabaseService.GetWords(_selectedUnit));
             UnitHelper.SortUnit(ref words);
 
             Words = words;

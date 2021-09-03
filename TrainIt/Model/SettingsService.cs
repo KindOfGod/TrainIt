@@ -17,8 +17,8 @@ namespace TrainIt.Model
     {
         #region Fields
 
-        public static Settings _settings;
-        private const string _settingsPath = "./settings.json";
+        public static UserSettings UserSettings;
+        public static ApplicationSettings ApplicationSettings;
 
         #endregion
 
@@ -26,7 +26,8 @@ namespace TrainIt.Model
 
         static SettingsService()
         {
-            _settings = new Settings();
+            ApplicationSettings = new ApplicationSettings();
+            UserSettings = new UserSettings();
         }
 
         #endregion
@@ -35,16 +36,16 @@ namespace TrainIt.Model
 
         public static void SaveSetting()
         {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(_settings);
-            File.WriteAllText(_settingsPath,json);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(UserSettings);
+            File.WriteAllText(ApplicationSettings.UserSettingsPath,json);
         }
 
         public static void ReadSettings()
         {
-            if (File.Exists(_settingsPath))
+            if (File.Exists(ApplicationSettings.UserSettingsPath))
             {
-                var json = File.ReadAllText(_settingsPath);
-                _settings = Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(json);
+                var json = File.ReadAllText(ApplicationSettings.UserSettingsPath);
+                UserSettings = Newtonsoft.Json.JsonConvert.DeserializeObject<UserSettings>(json);
                 return;
             }
 
@@ -56,7 +57,7 @@ namespace TrainIt.Model
 
         private static void DefaultSettings()
         {
-            _settings = new Settings
+            UserSettings = new UserSettings
             {
                 WordStartGrade = 3
             };
