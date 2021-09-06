@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
 using TrainIt.Annotations;
+using TrainIt.Dialogs.DialogViewModels;
 using TrainIt.Interfaces;
-using TrainIt.ViewModel.DialogViewModels;
 
 namespace TrainIt.Model
 {
@@ -15,10 +11,18 @@ namespace TrainIt.Model
         private static string _currentIdentifier;
 
         [ItemCanBeNull]
-        public static async Task<object> OpenDialog(IDialog dialog, string identifier = "RootHost")
+        public static async Task<object> ShowDialog(IDialog dialog, string identifier = "RootHost")
         {
             _currentIdentifier = identifier;
             return await DialogHost.Show(dialog, identifier);
+        }
+
+        public static async void ShowErrorDialog(string errorHeader, string errorMessage, string identifier = "RootHost")
+        {
+            var dialog = new ErrorDialogViewModel(errorHeader, errorMessage);
+
+            _currentIdentifier = identifier;
+            await DialogHost.Show(dialog, identifier);
         }
 
         public static void CloseAllDialogs()

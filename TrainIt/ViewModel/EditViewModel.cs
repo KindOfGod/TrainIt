@@ -12,9 +12,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using MaterialDesignThemes.Wpf;
 using TrainIt.Classes;
+using TrainIt.Dialogs.DialogViewModels;
 using TrainIt.Helper;
 using TrainIt.Model;
-using TrainIt.ViewModel.DialogViewModels;
 using TrainIt.ViewModel.EditModels;
 using TrainIt.ViewModel.EditModels.UnitEditorModels;
 using Section = TrainIt.Classes.Section;
@@ -262,7 +262,7 @@ namespace TrainIt.ViewModel
         private static async Task CreateUnit(Section section)
         {
             var vm = new CreationDialogViewModel(2);
-            var result = await DialogService.OpenDialog(vm);
+            var result = await DialogService.ShowDialog(vm);
 
             if(result == null || result.Equals(false))
                 return;
@@ -283,7 +283,7 @@ namespace TrainIt.ViewModel
         private static async Task CreateSection(Language language)
         {
             var vm = new CreationDialogViewModel(1);
-            var result = await DialogService.OpenDialog(vm);
+            var result = await DialogService.ShowDialog(vm);
 
             if(result == null || result.Equals(false))
                 return;
@@ -304,7 +304,7 @@ namespace TrainIt.ViewModel
         private async void OnCreateLanguage()
         {
             var vm = new CreationDialogViewModel(0);
-            var result = await DialogService.OpenDialog(vm);
+            var result = await DialogService.ShowDialog(vm);
 
             if(result == null || result.Equals(false))
                 return;

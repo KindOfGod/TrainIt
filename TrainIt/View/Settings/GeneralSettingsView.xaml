@@ -17,8 +17,8 @@
         <StackPanel Orientation="Vertical">
 
             <StackPanel Orientation="Horizontal" Height="50">
-                <TextBlock Text="Initial Word Grade" Foreground="LightGray" FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"/>
-                <Slider Width="450" Margin="20,0,20,0" Foreground="LightGray" Minimum="1" Maximum="5" VerticalAlignment="Center"
+                <TextBlock Text="Initial Word Grade" Foreground="{StaticResource LightFont}" FontSize="15" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                <Slider Width="450" Margin="20,0,20,0" Foreground="{StaticResource LightFont}" Minimum="1" Maximum="5" VerticalAlignment="Center"
                         Value="{Binding WordStartGrade}" Style="{StaticResource MahApps.Styles.Slider}"
                         TickFrequency="0.1" IsSnapToTickEnabled="True"/>
 
@@ -26,7 +26,7 @@
                         Background="{Binding WordStartGrade, Converter={StaticResource DoubleToBrushConverter}}">
 
                     <Label Content="{Binding WordStartGrade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                           Width="38" Height="30" FontWeight="ExtraBold" Foreground="White"/>
+                           Width="38" Height="30" FontWeight="ExtraBold" Foreground="{StaticResource StrongFont}"/>
                 </Border>
             </StackPanel>
 

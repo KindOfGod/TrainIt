@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Material Design: MahApps Compatibility -->
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/materialdesigntheme.mahapps.fonts.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml"/>
+
+        <!-- Styles -->
+        <ResourceDictionary Source="Styles/CustomScrollbarStyle.xaml"/>
+
+        <!-- Dialogs -->
+        <ResourceDictionary Source="../Dialogs/Edit/CreationDialogs.xaml"/>
+        <ResourceDictionary Source="../Dialogs/ErrorDialog.xaml"/>
+
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

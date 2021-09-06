@@ -16,6 +16,7 @@ namespace TrainIt.Classes
         #region Fields
 
         private double _wordStartGrade;
+        private Skin _skin;
 
         #endregion
 
@@ -30,6 +31,19 @@ namespace TrainIt.Classes
                     return;
 
                 _wordStartGrade = value;
+                OnPropertyChange();
+            }
+        }
+
+        public Skin Skin
+        {
+            get => _skin;
+            set
+            {
+                if (_skin == value)
+                    return;
+
+                _skin = value;
                 OnPropertyChange();
             }
         }

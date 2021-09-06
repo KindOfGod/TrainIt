@@ -12,9 +12,8 @@
              xmlns:converter="clr-namespace:TrainIt.Converter"
              xmlns:ue="clr-namespace:TrainIt.View.Edit.UnitEditor"
              xmlns:uem="clr-namespace:TrainIt.ViewModel.EditModels.UnitEditorModels"
-             xmlns:dialogViewModels="clr-namespace:TrainIt.ViewModel.DialogViewModels"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
-             mc:Ignorable="d" Background="#414047"
+             mc:Ignorable="d" Background="{DynamicResource Color3}"
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance Type=vm:EditViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
@@ -64,10 +63,10 @@
 
         <DockPanel Grid.Column="1" Dock="Right">
 
-                <Border x:Name="SearchBox" Background="#2E2E30" BorderThickness="1" CornerRadius="5" Height="30" Width="150" HorizontalAlignment="Right">
+                <Border x:Name="SearchBox" Background="{DynamicResource Color2}" BorderThickness="1" CornerRadius="5" Height="30" Width="150" HorizontalAlignment="Right">
                     <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                             Margin="5,0,0,0" TextAlignment="Left" BorderBrush="Transparent" CaretBrush="LightGray"
-                             VerticalContentAlignment="Center" Foreground="LightGray" materialDesignMahApps:HintAssist.Hint="Search" SelectionBrush="LightGray"
+                             Margin="5,0,0,0" TextAlignment="Left" BorderBrush="Transparent" CaretBrush="{DynamicResource LightFont}"
+                             VerticalContentAlignment="Center" Foreground="{DynamicResource LightFont}" materialDesignMahApps:HintAssist.Hint="Search" SelectionBrush="{DynamicResource LightFont}"
                              GotFocus="SearchBox_OnGotFocus" LostFocus="SearchBox_OnLostFocus"/>
                 </Border>
 
@@ -75,7 +74,7 @@
 
         <TreeView x:Name="EditTreeView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                     ItemsSource="{Binding LanguageList, IsAsync=True}"
-                    Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3" BorderBrush="#2E2E30"
+                    Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderThickness="3" BorderBrush="{DynamicResource Color2}"
                     SelectedItemChanged="TreeView_OnSelectedItemChanged"
                     FontFamily="Consolas" FontSize="18" FontWeight="Bold" Margin="0,0,5,0" MouseDoubleClick="EditTreeView_OnMouseDoubleClick">
 
@@ -120,13 +119,13 @@
                                 Background="{Binding Grade, Converter={StaticResource DoubleToBrushConverter}}">
 
                             <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                       Width="38" Height="30" FontWeight="ExtraBold" Foreground="White"/>
+                                       Width="38" Height="30" FontWeight="ExtraBold" Foreground="{DynamicResource StrongFont}"/>
                         </Border>
 
                         <Ellipse Width="25" Height="25" Margin="11,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
                                      Fill="{Binding LastLearned, Converter={StaticResource DateToBrushConverter}}"/>
 
-                        <Label Margin="10,0,0,0" Content="{Binding Name}" Foreground="White"/>
+                        <Label Margin="10,0,0,0" Content="{Binding Name}" Foreground="{DynamicResource StrongFont}"/>
 
                     </StackPanel>
 
@@ -140,13 +139,13 @@
                                             Background="{Binding Grade, Converter={StaticResource DoubleToBrushConverter}}">
 
                                     <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                               Width="38" Height="30" FontWeight="ExtraBold" Foreground="White"/>
+                                               Width="38" Height="30" FontWeight="ExtraBold" Foreground="{DynamicResource StrongFont}"/>
                                 </Border>
 
                                 <Ellipse Width="25" Height="25" Margin="10,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
                                              Fill="{Binding LastLearned, Converter={StaticResource DateToBrushConverter}}"/>
 
-                                <Label Margin="10,0,0,0" Content="{Binding Name}" Foreground="White"/>
+                                <Label Margin="10,0,0,0" Content="{Binding Name}" Foreground="{DynamicResource StrongFont}"/>
 
                             </StackPanel>
 
@@ -160,13 +159,13 @@
                                                     Background="{Binding Grade, Converter={StaticResource DoubleToBrushConverter}}">
 
                                             <Label Content="{Binding Grade}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                                       Width="38" Height="30" FontWeight="ExtraBold" Foreground="White"/>
+                                                       Width="38" Height="30" FontWeight="ExtraBold" Foreground="{DynamicResource StrongFont}"/>
                                         </Border>
 
                                         <Ellipse Width="25" Height="25" Margin="10,0,0,0" ToolTip="{Binding LastLearned, StringFormat='Last Learned: {0}'}"
                                                      Fill="{Binding LastLearned, Converter={StaticResource DateToBrushConverter}}"/>
 
-                                        <Label Margin="10,0,0,0" Content="{Binding Name}" Foreground="White"/>
+                                        <Label Margin="10,0,0,0" Content="{Binding Name}" Foreground="{DynamicResource StrongFont}"/>
 
                                     </StackPanel>
 
@@ -197,7 +196,7 @@
                 <Button Margin="10,0,0,0" Width="60" Height="40" VerticalAlignment="Center"
                         Background="Transparent" BorderBrush="Transparent" ToolTip="Create Language" BorderThickness="0"
                         Command="{ Binding CreateLanguageCommand}">
-                    <materialDesignMahApps:PackIcon Kind="Language" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <materialDesignMahApps:PackIcon Kind="Language" Foreground="{DynamicResource StrongFont}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
             </StackPanel>
 
@@ -205,21 +204,21 @@
                 <Button Margin="0,0,10,0" Width="60" Height="40" VerticalAlignment="Center"
                         Background="Transparent" BorderBrush="Transparent" ToolTip="Create and add a child to selected Item" BorderThickness="0"
                         Command="{Binding CreateButtonCommand}">
-                    <materialDesignMahApps:PackIcon Kind="AddBox" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <materialDesignMahApps:PackIcon Kind="AddBox" Foreground="{DynamicResource StrongFont}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
 
                 <Button Margin="0,0,10,0" Width="60" Height="40" VerticalAlignment="Center"
                         Background="Transparent" BorderBrush="Transparent" ToolTip="Edit Unit" BorderThickness="0"
                         Command="{Binding EditUnitCommand}"
                         Visibility="{Binding IsUnitSelected}">
-                    <materialDesignMahApps:PackIcon Kind="Pen" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <materialDesignMahApps:PackIcon Kind="Pen" Foreground="{DynamicResource StrongFont}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
 
                 <Button Margin="0,0,10,0" Width="60" Height="40" VerticalAlignment="Center"
                         Background="Transparent" BorderBrush="Transparent" ToolTip="Deletes selected Item and it's children" BorderThickness="0"
                         Command="{Binding DeleteButtonCommand}" 
                         Visibility="{Binding IsAnythingSelected}">
-                    <materialDesignMahApps:PackIcon Kind="TrashCan" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <materialDesignMahApps:PackIcon Kind="TrashCan" Foreground="{DynamicResource StrongFont}" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
             </StackPanel>
 

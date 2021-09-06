@@ -132,6 +132,7 @@ namespace TrainIt.ViewModel
         public ICommand OpenButtonCommand => new RelayCommand(p => OnOpenMenu());
         public ICommand CloseButtonCommand => new RelayCommand(p => OnCloseMenu());
         public ICommand SettingsButtonCommand => new RelayCommand(p => OnSettingsCommand());
+        public ICommand ThemeButtonCommand => new RelayCommand(p => OnThemeCommand());
 
         #endregion
 
@@ -162,6 +163,11 @@ namespace TrainIt.ViewModel
                 SettingsViewModel = null;
                 SettingsService.SaveSetting();
             }
+        }
+
+        private void OnThemeCommand()
+        {
+            (Application.Current as App)?.ChangeSkin();
         }
         #endregion
 

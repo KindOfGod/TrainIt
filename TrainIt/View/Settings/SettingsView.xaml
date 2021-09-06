@@ -7,7 +7,7 @@
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:sm="clr-namespace:TrainIt.ViewModel.SettingsModels"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance Type={x:Type sm:SettingsViewModel}, IsDesignTimeCreatable=True}"
-             d:DesignHeight="720" d:DesignWidth="1280" Background="#414047">
+             d:DesignHeight="720" d:DesignWidth="1280" Background="{DynamicResource Color3}">
 
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type sm:GeneralSettingsViewModel}">
@@ -24,14 +24,14 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.ColumnSpan="2" Fill="#2E2E30"/>
+        <Rectangle Grid.ColumnSpan="2" Fill="{DynamicResource Color2}"/>
 
         <StackPanel Margin="0,50,0,50" Grid.Column="1">
             <ListBox SelectedIndex="0" SelectedItem="{Binding SelectedItem}">
-                <ListBoxItem x:Name="GeneralSettings" Content="General" Foreground="LightGray" FontSize="16"/>
-                <ListBoxItem Content="Appearance" Foreground="LightGray" FontSize="16"/>
-                <ListBoxItem Content="Performance" Foreground="LightGray" FontSize="16"/>
-                <ListBoxItem Content="Advanced" Foreground="LightGray" FontSize="16"/>
+                <ListBoxItem x:Name="GeneralSettings" Content="General" Foreground="{DynamicResource LightFont}" FontSize="16"/>
+                <ListBoxItem Content="Appearance" Foreground="{DynamicResource LightFont}" FontSize="16"/>
+                <ListBoxItem Content="Performance" Foreground="{DynamicResource LightFont}" FontSize="16"/>
+                <ListBoxItem Content="Advanced" Foreground="{DynamicResource LightFont}" FontSize="16"/>
             </ListBox>
         </StackPanel>
 

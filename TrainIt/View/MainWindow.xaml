@@ -11,16 +11,20 @@
         xmlns:vm="clr-namespace:TrainIt.ViewModel"
         xmlns:svm="clr-namespace:TrainIt.ViewModel.SettingsModels"
         xmlns:s="clr-namespace:TrainIt.View.Settings"
-        x:Class="TrainIt.MainWindow" WindowTitleBrush="#202021" NonActiveWindowTitleBrush="#202021" FlyoutOverlayBrush="#202021" GlowBrush="#202021"
-        OverlayBrush="#202021" Background="#414047" d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel, IsDesignTimeCreatable=True}"
+        x:Class="TrainIt.MainWindow" WindowTitleBrush="{DynamicResource Color1}" NonActiveWindowTitleBrush="{DynamicResource Color1}" 
+        FlyoutOverlayBrush="{DynamicResource Color1}" GlowBrush="{DynamicResource Color1}"
+        OverlayBrush="{DynamicResource Color1}" Background="{DynamicResource Color3}"
+        d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel, IsDesignTimeCreatable=True}"
         mc:Ignorable="d" Title="TrainIt" Height="720" Width="1280" MinWidth="900" MinHeight="450"
         WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            
             <Button Command="{Binding SettingsButtonCommand}" ToolTip="UserSettings">
-                <materialDesignMahApps:PackIcon Kind="Settings" Width="25" Height="25" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <materialDesignMahApps:PackIcon Kind="Settings" Width="25" Height="25" Foreground="{DynamicResource StrongFont}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Command="{Binding ThemeButtonCommand}" ToolTip="Theme">
+                <materialDesignMahApps:PackIcon Kind="ThemeLightDark" Width="25" Height="25" Foreground="{DynamicResource StrongFont}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
@@ -59,32 +63,33 @@
     <materialDesignMahApps:DialogHost Identifier="RootHost" CloseOnClickAway="True" BorderBrush="{DynamicResource MaterialDesignDivider}">
         <Grid>
             <DockPanel Dock="Left">
-                <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="#2E2E30">
+                <Grid x:Name="GridMenu" HorizontalAlignment="Left" Width="50" Background="{DynamicResource Color2}">
                     <StackPanel>
-                        <Grid Height="150" Background="#202021"/>
+                        <Grid Height="150" Background="{DynamicResource Color1}"/>
 
-                        <ListView Foreground="White" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView Foreground="{DynamicResource LightFont}" FontFamily="Calibri" FontSize="18" SelectedItem="{Binding SelectedItem}" 
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListViewItem x:Name="DashboardItem" Height="45" Padding="0">
                                 <StackPanel Orientation="Horizontal" Margin="5, 0">
-                                    <materialDesignMahApps:PackIcon Kind="BulletinBoard" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <materialDesignMahApps:PackIcon Kind="BulletinBoard" Width="30" Height="30" Foreground="{DynamicResource LightFont}" Margin="5" VerticalAlignment="Center"/>
                                     <TextBlock Text="Dashboard" Margin="10" FontWeight="Bold"/>
                                 </StackPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="EditItem" Height="45" Padding="0">
                                 <StackPanel Orientation="Horizontal"  Margin="5, 0">
-                                    <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <materialDesignMahApps:PackIcon Kind="Pencil" Width="30" Height="30" Foreground="{DynamicResource LightFont}" Margin="5" VerticalAlignment="Center"/>
                                     <TextBlock Text="Edit" Margin="10" FontWeight="Bold"/>
                                 </StackPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="TrainItem" Height="45" Padding="0">
                                 <StackPanel Orientation="Horizontal"  Margin="5, 0">
-                                    <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <materialDesignMahApps:PackIcon Kind="Dumbbell" Width="30" Height="30" Foreground="{DynamicResource LightFont}" Margin="5" VerticalAlignment="Center"/>
                                     <TextBlock Text="Train" Margin="10" FontWeight="Bold"/>
                                 </StackPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="StatisticsItem" Height="45" Padding="0">
                                 <StackPanel Orientation="Horizontal" Margin="5, 0">
-                                    <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="LightGray" Margin="5" VerticalAlignment="Center"/>
+                                    <materialDesignMahApps:PackIcon Kind="ChartLine" Width="30" Height="30" Foreground="{DynamicResource LightFont}" Margin="5" VerticalAlignment="Center"/>
                                     <TextBlock Text="Statistics" Margin="10" FontWeight="Bold"/>
                                 </StackPanel>
                             </ListViewItem>
@@ -92,7 +97,7 @@
                     </StackPanel>
 
                     <Button x:Name="ButtonMenu" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Width="50" Height="50" Click="ButtonMenu_OnClick">
-                        <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="White" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
+                        <materialDesignMahApps:PackIcon Kind="Menu" Width="30" Height="30" Foreground="{DynamicResource StrongFont}" Margin="-5,0,-5,0" VerticalAlignment="Center"/>
                     </Button>
                 </Grid>
 

@@ -20,7 +20,6 @@ namespace TrainIt.Model
         public TrainItService(IDialogCoordinator dialogCoordinator)
         {
             _dialogCoordinator = dialogCoordinator;
-
             //var tsk = TestObjects();
         }
         #endregion
